@@ -23,8 +23,6 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
 Restart the development server after creating or updating the `.env` file.
 
----
-
 ## Install Dependencies
 
 Install dependencies using **npm** or **bun**:
@@ -52,8 +50,6 @@ bun dev
 ```
 
 Open `http://localhost:3000` in your browser to view the application.
-
----
 
 ## Git Commit Convention
 
@@ -83,3 +79,14 @@ git commit -m "feat: add supabase authentication"
 git commit -m "fix: handle null session on refresh"
 git commit -m "docs: update setup instructions"
 ```
+
+## Branch & Pull Request Policy
+
+All changes **must be submitted via Pull Requests** targeting the **development** branch.
+Direct commits to `development` or other protected branches are **not allowed**.
+
+- PRs should follow the **Conventional Commits** format.
+- Ensure your branch is up to date with `development` before submitting a PR.
+- All PRs should be reviewed and approved before merging.
+
+This ensures a clean commit history and proper code review workflow.
