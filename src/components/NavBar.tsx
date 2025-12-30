@@ -1,12 +1,18 @@
 'use client';
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/utils/supabase';
+import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-export default function NavBar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+const NavBar = () => {
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+  ];
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { loggedIn, setLoggedIn, setUser } = useAuth();
   const router = useRouter();
 
@@ -23,45 +29,36 @@ export default function NavBar() {
       console.error('Logout failed', err);
     }
   };
-
   return (
-    <nav className="w-full bg-slate-900 px-6 py-3 shadow">
-      <div className="max-w-[1400px] w-full mx-auto flex justify-between items-center">
-        <h1 className="text-xl font-bold text-white">
-          <Link href="/" className="hover:opacity-80 transition">
-            Judge0
-          </Link>
-        </h1>
-
-        <div className="hidden md:flex gap-6 text-slate-300">
-          <Link href="/" className="hover:text-white transition">
-            Home
-          </Link>
-          {loggedIn && (
-            <Link
-              href="/profile"
-              className="hover:text-white transition text-center"
-            >
-              Profile
-            </Link>
-          )}
-          <Link href="/about" className="hover:text-white transition">
-            About
-          </Link>
+    <div className="fixed w-screen">
+      {/* Desktop Navigation */}
+      <nav className="hidden md:flex w-screen h-14 bg-linear-to-r from-green-800 to-green-950 items-center justify-between px-12">
+        <div className="nav-logo">
+          <h2 className="font-segoe font-semibold text-xl">CodeLynx</h2>
         </div>
-
-        <div className="hidden md:flex gap-4">
+        <div className="nav-items">
+          <ul className="flex items-center gap-5">
+            {navLinks.map((link, i) => (
+              <li key={i}>
+                <Link href={link.path}>{link.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="nav-buttons">
           {!loggedIn && (
             <>
               <Link
-                href="/login"
-                className="px-4 py-1.5 rounded bg-sky-600 text-white hover:bg-sky-700 transition font-medium"
+                href={'/login'}
+                className="mr-4 px-6 py-2 rounded-2xl border border-gray-100 text-gray-100 
+                      font-bold text-sm bg-gray-100/15 hover:bg-gray-300/20 transition-colors"
               >
                 Login
               </Link>
               <Link
-                href="/register"
-                className="px-4 py-1.5 rounded bg-emerald-600 text-white hover:bg-emerald-700 transition font-medium"
+                href={'/register'}
+                className="mr-4 px-6 py-2 rounded-2xl bg-gray-100 text-black 
+                      font-bold text-sm hover:bg-gray-300 transition-colors"
               >
                 Register
               </Link>
@@ -70,98 +67,78 @@ export default function NavBar() {
           {loggedIn && (
             <button
               onClick={handleLogout}
-              className="px-4 py-1.5 rounded bg-rose-600 text-white hover:bg-rose-700 transition font-medium"
+              className="px-6 py-2 rounded-2xl bg-gray-100 text-black 
+          font-bold text-sm hover:bg-gray-300 transition-colors"
             >
               Logout
             </button>
           )}
         </div>
+      </nav>
 
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden text-white focus:outline-none"
+      {/* Mobile Navigation */}
+      <nav className="md:hidden relative">
+        <div className="bar bg-linear-to-b from-green-800 to-green-950 flex items-center justify-between px-5 h-12">
+          <div className="nav-logo">
+            <h2 className="font-segoe font-semibold">CodeLynx</h2>
+          </div>
+          <div className="nav-icon">
+            <button
+              className="text-2xl"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+        </div>
+        <div
+          className={`nav-bar -translate-x-full relative bg-linear-to-b 
+            from-green-950 to-black/80 h-svh w-64 flex flex-col
+            items-center justify-center duration-300 z-10
+            transition-transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
-          {menuOpen ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 8h16M4 16h16"
-              />
-            </svg>
-          )}
-        </button>
-      </div>
-
-      {menuOpen && (
-        <div className="md:hidden mt-3 flex flex-col gap-3 text-slate-300 items-center">
-          <Link href="/" className="hover:text-white transition text-center">
-            Home
-          </Link>
-          {loggedIn && (
-            <Link
-              href="/profile"
-              className="hover:text-white transition text-center"
-            >
-              Profile
-            </Link>
-          )}
-          <Link
-            href="/about"
-            className="hover:text-white transition text-center"
-          >
-            About
-          </Link>
-
-          {!loggedIn && (
-            <>
-              <Link
-                href="/login"
-                className="px-4 py-1.5 rounded bg-sky-600 text-white hover:bg-sky-700 transition font-medium"
+          <div className="nav-items mb-50">
+            <ul className="flex flex-col gap-5">
+              {navLinks.map((link, i) => (
+                <li key={i} className="text-xl text-center">
+                  <a href={link.path}>{link.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="nav-buttons absolute bottom-[20vh]">
+            {!loggedIn && (
+              <>
+                <Link
+                  href={'/login'}
+                  className="block mb-4 px-6 py-2 rounded-2xl border border-gray-100 text-gray-100
+                                    font-bold text-sm bg-gray-100/15 hover:bg-gray-300/20 transition-colors text-center"
+                >
+                  Login
+                </Link>
+                <Link
+                  href={'/register'}
+                  className="block mb-4 px-6 py-2 rounded-2xl bg-gray-100 text-black
+                                    font-bold text-sm hover:bg-gray-300 transition-colors text-center"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+            {loggedIn && (
+              <button
+                onClick={handleLogout}
+                className="px-6 py-2 rounded-2xl bg-gray-100 text-black
+                                font-bold text-sm hover:bg-gray-300 transition-colors"
               >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="px-4 py-1.5 rounded bg-emerald-600 text-white hover:bg-emerald-700 transition font-medium"
-              >
-                Register
-              </Link>
-            </>
-          )}
-
-          {loggedIn && (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-1.5 rounded bg-rose-600 text-white hover:bg-rose-700 transition font-medium"
-            >
-              Logout
-            </button>
-          )}
+                Logout
+              </button>
+            )}
+          </div>
         </div>
-      )}
-    </nav>
+      </nav>
+    </div>
   );
-}
+};
+
+export default NavBar;
