@@ -8,7 +8,7 @@ export default function QuestionPreviewCard({
 }: Readonly<QuestionCardPreview>) {
   return (
     <div className="relative group">
-      <div className="w-3 h-10 bg-green-400 absolute -left-3 top-12 -translate-y-1/2 " />
+      <div className="w-3 h-12 bg-green-400 absolute -left-3 top-14 -translate-y-1/2 " />
       <Link href={`/question/${id}`} className="question-card">
         <h1 className="question-card-title ">{title}</h1>
 
