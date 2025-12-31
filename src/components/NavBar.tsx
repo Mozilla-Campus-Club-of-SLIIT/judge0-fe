@@ -5,7 +5,7 @@ import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 const NavBar = () => {
   const navLinks: { name: string; path: string }[] = [
@@ -79,8 +79,18 @@ const NavBar = () => {
         </div>
 
         <div className="nav-buttons relative z-10">
-          {!loggedIn && (
-            <>
+          {loggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="px-6 py-2 rounded-2xl
+        bg-gray-100 text-black
+        font-bold text-sm hover:bg-gray-300
+        transition-colors cursor-pointer"
+            >
+              Logout
+            </button>
+          ) : (
+            <Fragment>
               <Link
                 href="/login"
                 className="mr-4 px-6 py-2 rounded-2xl
@@ -101,19 +111,7 @@ const NavBar = () => {
               >
                 Register
               </Link>
-            </>
-          )}
-
-          {loggedIn && (
-            <button
-              onClick={handleLogout}
-              className="px-6 py-2 rounded-2xl
-        bg-gray-100 text-black
-        font-bold text-sm hover:bg-gray-300
-        transition-colors cursor-pointer"
-            >
-              Logout
-            </button>
+            </Fragment>
           )}
         </div>
       </nav>
@@ -142,9 +140,9 @@ const NavBar = () => {
           </div>
         </div>
         <div
-          className={`bg-[#0a1818]/70 inset-0 z-40 h-fit w-full
+          className={`bg-[#0a1818]/70 absolute top-14 left-0 z-40 h-fit w-full
              transition duration-300 ease-in-out py-10
-        flex flex-col items-center gap-4 ${
+        flex flex-col items-center gap-4 transform ${
           isMenuOpen
             ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 -translate-y-3 pointer-events-none'
@@ -163,8 +161,16 @@ const NavBar = () => {
             </ul>
           </div>
           <div className="nav-buttons mt-6">
-            {!loggedIn && (
-              <>
+            {loggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="px-6 py-2 rounded-2xl bg-gray-100 text-black
+                                font-bold text-sm hover:bg-gray-300 transition-colors"
+              >
+                Logout
+              </button>
+            ) : (
+              <Fragment>
                 <Link
                   href={'/login'}
                   className="block mb-4 px-6 py-2 rounded-2xl border border-gray-100 text-gray-100
@@ -179,16 +185,7 @@ const NavBar = () => {
                 >
                   Register
                 </Link>
-              </>
-            )}
-            {loggedIn && (
-              <button
-                onClick={handleLogout}
-                className="px-6 py-2 rounded-2xl bg-gray-100 text-black
-                                font-bold text-sm hover:bg-gray-300 transition-colors"
-              >
-                Logout
-              </button>
+              </Fragment>
             )}
           </div>
         </div>
