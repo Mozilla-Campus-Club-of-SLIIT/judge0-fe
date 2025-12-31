@@ -155,7 +155,7 @@ const NavBar = () => {
                   key={i}
                   className="text-md text-center font-bold text-gray-200"
                 >
-                  <a href={link.path}>{link.name}</a>
+                  <Link href={link.path}>{link.name}</Link>
                 </li>
               ))}
             </ul>
