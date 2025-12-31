@@ -2,13 +2,15 @@
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/utils/supabase';
 import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const NavBar = () => {
-  const navLinks = [
+  const navLinks: { name: string; path: string }[] = [
     { name: 'Home', path: '/' },
+    { name: 'Profile', path: '/profile' },
     { name: 'About', path: '/about' },
   ];
 
@@ -32,43 +34,83 @@ const NavBar = () => {
   return (
     <div className="fixed w-screen">
       {/* Desktop Navigation */}
-      <nav className="hidden md:flex w-screen h-14 bg-linear-to-r from-green-800 to-green-950 items-center justify-between px-12">
-        <div className="nav-logo">
-          <h2 className="font-segoe font-semibold text-xl">CodeLynx</h2>
+      <nav
+        className="
+  hidden md:flex w-screen h-14 py-10
+  bg-[#0a131a]/70
+  items-center justify-between px-12
+  relative overflow-hidden
+"
+      >
+        {/* bubble glow layer */}
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="
+      absolute -top-24 left-1/2 -translate-x-1/2
+      w-150 h-40
+      bg-radial from-green-400/40 via-green-400/10 to-transparent
+      blur-2xl
+    "
+          />
         </div>
-        <div className="nav-items">
-          <ul className="flex items-center gap-5">
+
+        <div className="nav-logo relative z-10">
+          <Image
+            src="/main_logo.webp"
+            height={120}
+            width={120}
+            alt="main logo"
+          />
+        </div>
+
+        <div className="nav-items relative z-10">
+          <ul className="flex items-center gap-5 text-gray-200">
             {navLinks.map((link, i) => (
               <li key={i}>
-                <Link href={link.path}>{link.name}</Link>
+                <Link
+                  href={link.path}
+                  className="hover:text-white transition-colors"
+                >
+                  {link.name}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
-        <div className="nav-buttons">
+
+        <div className="nav-buttons relative z-10">
           {!loggedIn && (
             <>
               <Link
-                href={'/login'}
-                className="mr-4 px-6 py-2 rounded-2xl border border-gray-100 text-gray-100 
-                      font-bold text-sm bg-gray-100/15 hover:bg-gray-300/20 transition-colors"
+                href="/login"
+                className="mr-4 px-6 py-2 rounded-2xl
+          border border-gray-100 text-gray-100
+          font-bold text-sm
+          bg-gray-100/15 hover:bg-gray-300/20
+          transition-colors cursor-pointer"
               >
                 Login
               </Link>
+
               <Link
-                href={'/register'}
-                className="mr-4 px-6 py-2 rounded-2xl bg-gray-100 text-black 
-                      font-bold text-sm hover:bg-gray-300 transition-colors"
+                href="/register"
+                className="mr-4 px-6 py-2 rounded-2xl
+          bg-gray-100 text-black
+          font-bold text-sm hover:bg-gray-300
+          transition-colors cursor-pointer"
               >
                 Register
               </Link>
             </>
           )}
+
           {loggedIn && (
             <button
               onClick={handleLogout}
-              className="px-6 py-2 rounded-2xl bg-gray-100 text-black 
-          font-bold text-sm hover:bg-gray-300 transition-colors"
+              className="px-6 py-2 rounded-2xl
+        bg-gray-100 text-black
+        font-bold text-sm hover:bg-gray-300
+        transition-colors cursor-pointer"
             >
               Logout
             </button>
@@ -78,9 +120,17 @@ const NavBar = () => {
 
       {/* Mobile Navigation */}
       <nav className="md:hidden relative">
-        <div className="bar bg-linear-to-b from-green-800 to-green-950 flex items-center justify-between px-5 h-12">
+        <div
+          className="bar bg-[#0a131a]/70
+        flex items-center justify-between px-5 h-14 py-6"
+        >
           <div className="nav-logo">
-            <h2 className="font-segoe font-semibold">CodeLynx</h2>
+            <Image
+              src="/main_logo.webp"
+              height={80}
+              width={80}
+              alt="main logo"
+            />
           </div>
           <div className="nav-icon">
             <button
@@ -92,21 +142,27 @@ const NavBar = () => {
           </div>
         </div>
         <div
-          className={`nav-bar -translate-x-full relative bg-linear-to-b 
-            from-green-950 to-black/80 h-svh w-64 flex flex-col
-            items-center justify-center duration-300 z-10
-            transition-transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+          className={`bg-[#0a1818]/70 inset-0 z-40 h-fit w-full
+             transition duration-300 ease-in-out py-10
+        flex flex-col items-center gap-4 ${
+          isMenuOpen
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 -translate-y-3 pointer-events-none'
+        }`}
         >
-          <div className="nav-items mb-50">
+          <div className="nav-items mt-10">
             <ul className="flex flex-col gap-5">
               {navLinks.map((link, i) => (
-                <li key={i} className="text-xl text-center">
+                <li
+                  key={i}
+                  className="text-md text-center font-bold text-gray-200"
+                >
                   <a href={link.path}>{link.name}</a>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="nav-buttons absolute bottom-[20vh]">
+          <div className="nav-buttons mt-6">
             {!loggedIn && (
               <>
                 <Link
