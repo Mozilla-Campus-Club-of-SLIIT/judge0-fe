@@ -26,7 +26,7 @@ export default function QuestionPreviewCardContainer() {
 
   return (
     <div className="flex justify-center items-center w-full">
-      <div className="grid justify-center lg:grid-cols-2 md:grid-cols-3 gap-x-36 gap-y-18 py-24">
+      <div className="grid justify-center lg:grid-cols-2 md:grid-cols-3 gap-x-24 gap-y-12 py-24">
         {questions ? (
           questions.map((q) => (
             <QuestionPreviewCard
