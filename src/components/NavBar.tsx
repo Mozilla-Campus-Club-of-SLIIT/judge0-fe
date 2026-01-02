@@ -37,7 +37,7 @@ const NavBar = () => {
       <nav
         className="
   hidden md:flex w-screen h-14 py-10
-  bg-[#070916]/70
+  bg-[#070916]/20
   items-center justify-between px-12
   relative overflow-hidden
 "
@@ -107,7 +107,7 @@ const NavBar = () => {
       {/* Mobile Navigation */}
       <nav className="md:hidden relative">
         <div
-          className="bar bg-[#070916]/70
+          className="bar bg-[#081318]/70
         flex items-center justify-between px-5 h-14 py-6"
         >
           <div className="nav-logo">
@@ -128,7 +128,7 @@ const NavBar = () => {
           </div>
         </div>
         <div
-          className={`bg-[#070916]/70 absolute top-14 left-0 z-40 h-fit w-full
+          className={`bg-[#081318]/50 absolute top-14 left-0 z-40 h-fit w-full
              transition duration-300 ease-in-out py-10
         flex flex-col items-center gap-4 transform ${
           isMenuOpen
