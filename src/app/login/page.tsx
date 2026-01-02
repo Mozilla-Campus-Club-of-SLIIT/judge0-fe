@@ -13,9 +13,9 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="w-full flex flex-col gap-[20px]">
+    <>
       <NavBar />
       <LoginForm />
-    </div>
+    </>
   );
 }
