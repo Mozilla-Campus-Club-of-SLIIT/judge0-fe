@@ -89,16 +89,6 @@ const NavBar = () => {
               >
                 Login
               </Link>
-
-              <Link
-                href="/register"
-                className="mr-4 px-6 py-2 rounded-2xl
-          bg-gray-100 text-black
-          font-bold text-sm hover:bg-gray-300
-          transition-colors cursor-pointer"
-              >
-                Register
-              </Link>
             </Fragment>
           )}
         </div>
@@ -165,13 +155,6 @@ const NavBar = () => {
                                     font-bold text-sm bg-gray-100/15 hover:bg-gray-300/20 transition-colors text-center"
                 >
                   Login
-                </Link>
-                <Link
-                  href={'/register'}
-                  className="block mb-4 px-6 py-2 rounded-2xl bg-gray-100 text-black
-                                    font-bold text-sm hover:bg-gray-300 transition-colors text-center"
-                >
-                  Register
                 </Link>
               </Fragment>
             )}
