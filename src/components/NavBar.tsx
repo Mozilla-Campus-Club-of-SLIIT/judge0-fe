@@ -32,7 +32,7 @@ const NavBar = () => {
     }
   };
   return (
-    <div className="fixed w-screen">
+    <div className="sticky-top w-screen">
       {/* Desktop Navigation */}
       <nav
         className="
