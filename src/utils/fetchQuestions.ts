@@ -1,15 +1,53 @@
-export async function fetchQuestionsPreview() {
-  const res = await fetch('/question.json');
-  if (!res.ok) {
-    throw new Error('Failed to fetch questions preview');
-  }
-  return res.json();
+import type { Question, QuestionCardPreview } from '@/types/types';
+import { http } from '@/lib/api/http';
+
+type ChallengeListApiResponse = {
+  challenges: Array<{
+    id: number;
+    title: string;
+    description: string;
+    sample_input: string;
+    sample_output: string;
+    created_at: string;
+  }>;
+  currentPage: number;
+  totalPages: number;
+};
+
+type ChallengeByIdApiResponse = {
+  challenge: {
+    id: number;
+    title: string;
+    description: string;
+    sample_input: string;
+    sample_output: string;
+    created_at: string;
+  };
+};
+
+// Get all questions
+export async function fetchQuestionsPreview(): Promise<QuestionCardPreview[]> {
+  const data = await http<ChallengeListApiResponse>('/api/challenge/get', {
+    cache: 'no-store',
+  });
+
+  return data.challenges.map((q) => ({
+    id: q.id,
+    title: q.title,
+    description: q.description,
+  }));
 }
 
-export async function fetchQuestion(id: string) {
-  const res = await fetch(`/api/questions/${id}`);
-  if (!res.ok) {
-    throw new Error('Failed to fetch question');
-  }
-  return res.json();
+// Get question details by id
+export async function fetchQuestion(id: string): Promise<Question> {
+  const data = await http<ChallengeByIdApiResponse>(`/api/challenge/${id}`);
+  const q = data.challenge;
+
+  return {
+    id: q.id,
+    title: q.title,
+    description: q.description,
+    sample_input: q.sample_input,
+    sample_output: q.sample_output,
+  };
 }
