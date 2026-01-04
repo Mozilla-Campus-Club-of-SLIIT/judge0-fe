@@ -1,41 +1,15 @@
 @import 'tailwindcss';
 
 :root {
-  /* Fonts */
-  --segoe-stack:
-    'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji';
-
-  /* Background color */
   --background: #ffffff;
   --foreground: #171717;
-
-  /* Colors*/
-  --primary: #40fd51;
-  --light-green: #7ab181;
-  --dark-green: #02730c;
-  --darkest-green: #070916;
-  --dark-gray: #151722;
-
-  /* Gradients */
-  --linear-gradient: linear-gradient(11deg, #40fd51, #000000);
-  --gradient-stop-1: #1ee449;
-  --gradient-stop-2: #000000;
 }
 
 @theme inline {
-  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-
-  /*Fonts*/
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-segoe: var(--segoe-stack);
-
-  /*Question card*/
-  --color-card-background: var(--dark-gray);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -48,20 +22,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--segoe-stack);
-}
-
-@layer components {
-  /* Question card designs*/
-  .question-card {
-    @apply flex flex-col justify-start bg-card-background shadow-lg rounded-xl px-8 py-10 hover:shadow-2xl transition-shadow duration-300 max-w-112.5 md:max-w-100 h-auto overflow-hidden;
-  }
-
-  .question-card-title {
-    @apply text-primary text-2xl tracking-wider font-semibold;
-  }
-
-  .question-card-description {
-    @apply text-gray-300 text-xl line-clamp-5 mt-4 font-semibold;
-  }
+  font-family: Arial, Helvetica, sans-serif;
 }

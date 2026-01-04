@@ -2,23 +2,8 @@
   "data": [
     {
       "id": 1,
-      "title": "Count Distinct Words",
-      "description": "Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase..."
-    },
-    {
-      "id": 2,
-      "title": "Count Distinct Words",
-      "description": "Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase..."
-    },
-    {
-      "id": 3,
-      "title": "Count Distinct Words",
-      "description": "Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase..."
-    },
-    {
-      "id": 4,
-      "title": "Count Distinct Words",
-      "description": "Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase..."
+      "title": "Sum of Two Digits",
+      "description": "Make code show sum of 2 space seperated digits"
     }
   ]
 }
