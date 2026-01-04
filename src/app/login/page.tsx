@@ -13,9 +13,9 @@ export default async function LoginPage() {
   }
 
   return (
-    <>
+    <div className="w-screen h-screen overflow-x-hidden">
       <NavBar />
       <LoginForm />
-    </>
+    </div>
   );
 }

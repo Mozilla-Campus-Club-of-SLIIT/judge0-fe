@@ -32,11 +32,11 @@ const NavBar = () => {
     }
   };
   return (
-    <div className="sticky-top w-screen">
+    <div className="sticky top-0 w-full z-50">
       {/* Desktop Navigation */}
       <nav
         className="
-  hidden md:flex w-screen h-14 py-10
+  hidden md:flex w-full box-border py-4
   bg-[#070916]/20
   items-center justify-between px-12
   relative overflow-hidden
@@ -47,6 +47,7 @@ const NavBar = () => {
             src="/main_logo.webp"
             height={120}
             width={120}
+            className="max-w-full"
             alt="main logo"
           />
         </div>
@@ -95,10 +96,10 @@ const NavBar = () => {
       </nav>
 
       {/* Mobile Navigation */}
-      <nav className="md:hidden relative">
+      <nav className="md:hidden sticky top-0 z-50">
         <div
           className="bar bg-[#081318]/70
-        flex items-center justify-between px-5 h-14 py-6"
+        flex items-center justify-between px-5 h-14"
         >
           <div className="nav-logo">
             <Image
