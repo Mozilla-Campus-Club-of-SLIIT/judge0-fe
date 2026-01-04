@@ -3,7 +3,7 @@ import QuestionPreviewCardContainer from '@/components/QuestionPreviewCardContai
 
 export default function Home() {
   return (
-    <div className="w-screen h-screen overflow-x-hidden">
+    <div className="w-full h-screen overflow-x-hidden">
       <NavBar />
       <main className="mt-20 px-4">
         <QuestionPreviewCardContainer />

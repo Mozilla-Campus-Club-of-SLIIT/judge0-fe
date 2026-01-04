@@ -10,7 +10,7 @@ export default async function RegisterPage() {
     redirect('/');
   }
   return (
-    <div className="w-screen flex flex-col gap-[20px]">
+    <div className="w-full flex flex-col gap-[20px]">
       <NavBar />
       <RegisterForm />
     </div>

@@ -32,7 +32,7 @@ const NavBar = () => {
     }
   };
   return (
-    <div className="sticky top-0 w-full z-50">
+    <div className="sticky top-0 w-full z-50 overflow-x-clip">
       {/* Desktop Navigation */}
       <nav
         className="
