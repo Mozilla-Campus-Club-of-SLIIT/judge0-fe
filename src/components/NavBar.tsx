@@ -1,12 +1,20 @@
 'use client';
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/utils/supabase';
+import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Fragment, useState } from 'react';
 
-export default function NavBar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+const NavBar = () => {
+  const navLinks: { name: string; path: string }[] = [
+    { name: 'Home', path: '/' },
+    { name: 'Profile', path: '/profile' },
+    { name: 'About', path: '/about' },
+  ];
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { loggedIn, setLoggedIn, setUser } = useAuth();
   const router = useRouter();
 
@@ -23,145 +31,139 @@ export default function NavBar() {
       console.error('Logout failed', err);
     }
   };
-
   return (
-    <nav className="w-full bg-slate-900 px-6 py-3 shadow">
-      <div className="max-w-[1400px] w-full mx-auto flex justify-between items-center">
-        <h1 className="text-xl font-bold text-white">
-          <Link href="/" className="hover:opacity-80 transition">
-            Judge0
-          </Link>
-        </h1>
-
-        <div className="hidden md:flex gap-6 text-slate-300">
-          <Link href="/" className="hover:text-white transition">
-            Home
-          </Link>
-          {loggedIn && (
-            <Link
-              href="/profile"
-              className="hover:text-white transition text-center"
-            >
-              Profile
-            </Link>
-          )}
-          <Link href="/about" className="hover:text-white transition">
-            About
-          </Link>
+    <div className="sticky top-0 w-full z-50 overflow-x-clip">
+      {/* Desktop Navigation */}
+      <nav
+        className="
+  hidden md:flex w-full box-border py-4
+  bg-[#070916]/20
+  items-center justify-between px-12
+  relative overflow-hidden
+"
+      >
+        <div className="nav-logo relative z-10">
+          <Image
+            src="/main_logo.webp"
+            height={120}
+            width={120}
+            className="max-w-full"
+            alt="main logo"
+          />
         </div>
 
-        <div className="hidden md:flex gap-4">
-          {!loggedIn && (
-            <>
-              <Link
-                href="/login"
-                className="px-4 py-1.5 rounded bg-sky-600 text-white hover:bg-sky-700 transition font-medium"
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="px-4 py-1.5 rounded bg-emerald-600 text-white hover:bg-emerald-700 transition font-medium"
-              >
-                Register
-              </Link>
-            </>
-          )}
-          {loggedIn && (
+        <div className="nav-items relative z-10">
+          <ul className="flex items-center gap-5 text-gray-200">
+            {navLinks.map((link, i) => (
+              <li key={i}>
+                <Link
+                  href={link.path}
+                  className="hover:text-white transition-colors"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="nav-buttons relative z-10">
+          {loggedIn ? (
             <button
               onClick={handleLogout}
-              className="px-4 py-1.5 rounded bg-rose-600 text-white hover:bg-rose-700 transition font-medium"
+              className="px-6 py-2 rounded-2xl
+        bg-gray-100 text-black
+        font-bold text-sm hover:bg-gray-300
+        transition-colors cursor-pointer"
             >
               Logout
             </button>
-          )}
-        </div>
-
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden text-white focus:outline-none"
-        >
-          {menuOpen ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 8h16M4 16h16"
-              />
-            </svg>
-          )}
-        </button>
-      </div>
-
-      {menuOpen && (
-        <div className="md:hidden mt-3 flex flex-col gap-3 text-slate-300 items-center">
-          <Link href="/" className="hover:text-white transition text-center">
-            Home
-          </Link>
-          {loggedIn && (
-            <Link
-              href="/profile"
-              className="hover:text-white transition text-center"
-            >
-              Profile
-            </Link>
-          )}
-          <Link
-            href="/about"
-            className="hover:text-white transition text-center"
-          >
-            About
-          </Link>
-
-          {!loggedIn && (
-            <>
+            <Fragment>
               <Link
                 href="/login"
-                className="px-4 py-1.5 rounded bg-sky-600 text-white hover:bg-sky-700 transition font-medium"
+                className="mr-4 px-6 py-2 rounded-2xl
+          border border-gray-100 text-gray-100
+          font-bold text-sm
+          bg-gray-100/15 hover:bg-gray-300/20
+          transition-colors cursor-pointer"
               >
                 Login
               </Link>
-              <Link
-                href="/register"
-                className="px-4 py-1.5 rounded bg-emerald-600 text-white hover:bg-emerald-700 transition font-medium"
-              >
-                Register
-              </Link>
-            </>
-          )}
-
-          {loggedIn && (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-1.5 rounded bg-rose-600 text-white hover:bg-rose-700 transition font-medium"
-            >
-              Logout
-            </button>
+            </Fragment>
           )}
         </div>
-      )}
-    </nav>
+      </nav>
+
+      {/* Mobile Navigation */}
+      <nav className="md:hidden sticky top-0 z-50">
+        <div
+          className="bar bg-[#081318]/70
+        flex items-center justify-between px-5 py-8 h-14"
+        >
+          <div className="nav-logo">
+            <Image
+              src="/main_logo.webp"
+              height={80}
+              width={80}
+              alt="main logo"
+            />
+          </div>
+          <div className="nav-icon">
+            <button
+              className="text-2xl"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+        </div>
+        <div
+          className={`bg-[#081318]/50 absolute top-14 left-0 z-40 h-fit w-full
+             transition duration-300 ease-in-out py-10
+        flex flex-col items-center gap-4 transform ${
+          isMenuOpen
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 -translate-y-3 pointer-events-none'
+        }`}
+        >
+          <div className="nav-items mt-10">
+            <ul className="flex flex-col gap-5">
+              {navLinks.map((link, i) => (
+                <li
+                  key={i}
+                  className="text-md text-center font-bold text-gray-200"
+                >
+                  <Link href={link.path}>{link.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="nav-buttons mt-6">
+            {loggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="px-6 py-2 rounded-2xl bg-gray-100 text-black
+                                font-bold text-sm hover:bg-gray-300 transition-colors"
+              >
+                Logout
+              </button>
+            ) : (
+              <Fragment>
+                <Link
+                  href={'/login'}
+                  className="block mb-4 px-6 py-2 rounded-2xl border border-gray-100 text-gray-100
+                                    font-bold text-sm bg-gray-100/15 hover:bg-gray-300/20 transition-colors text-center"
+                >
+                  Login
+                </Link>
+              </Fragment>
+            )}
+          </div>
+        </div>
+      </nav>
+    </div>
   );
-}
+};
+
+export default NavBar;
