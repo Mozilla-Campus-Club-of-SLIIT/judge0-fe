@@ -9,21 +9,27 @@ export default function QuestionPreviewCardContainer() {
   const [questions, setQuestions] = useState<QuestionCardPreview[] | null>(
     null
   );
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+
     const loadQuestions = async () => {
       try {
         const data = await fetchQuestionsPreview();
-        console.log(data);
-
-        setQuestions(data.data);
-      } catch (error) {
-        console.error(error);
+        if (!cancelled) setQuestions(data);
+      } catch (e) {
+        console.error(e);
+        if (!cancelled) setError('Failed to load questions');
       }
     };
-    if (!questions) loadQuestions();
-  }, [questions]);
 
+    loadQuestions();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   return (
     <div className="flex justify-center items-center w-full">
       <div className="grid justify-center lg:grid-cols-2 md:grid-cols-3 gap-x-24 gap-y-12 py-24">
