@@ -64,4 +64,38 @@ body {
   .question-card-description {
     @apply text-gray-300 text-xl line-clamp-5 mt-4 font-semibold;
   }
+
+  /* Global background layout */
+  .page-background {
+    @apply min-h-screen w-full bg-[#070916] relative overflow-hidden;
+  }
+
+  .page-background-gradient {
+    @apply absolute inset-0 bg-gradient-to-t from-[#0d3a20]/40 via-[#070916]/80 to-[#070916] pointer-events-none;
+  }
+
+  /* tetris block */
+  .tetris-block {
+    @apply absolute w-3 h-3 bg-primary opacity-30 transition-opacity duration-300;
+  }
+
+  .tetris-block:hover {
+    @apply opacity-50;
+  }
+
+  /* white box */
+  .white-box {
+    @apply absolute bg-white;
+    border-radius: 0;
+  }
+
+  /* top glow effect */
+  .top-glow {
+    @apply absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-primary/20 via-primary/5 to-transparent pointer-events-none blur-2xl;
+  }
+
+  /* navbar with transparency */
+  .navbar-transparent {
+    @apply bg-[#070916]/20 backdrop-blur-md border-b border-white/5;
+  }
 }

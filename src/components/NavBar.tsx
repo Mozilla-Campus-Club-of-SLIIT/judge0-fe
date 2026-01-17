@@ -32,12 +32,12 @@ const NavBar = () => {
     }
   };
   return (
-    <div className="sticky top-0 w-full z-50 overflow-x-clip">
+    <>
       {/* Desktop Navigation */}
       <nav
         className="
-  hidden md:flex w-full box-border py-4
-  bg-[#070916]/20
+  hidden md:flex w-full box-border py-4 sticky top-0 z-50
+  navbar-transparent
   items-center justify-between px-12
   relative overflow-hidden
 "
@@ -98,7 +98,7 @@ const NavBar = () => {
       {/* Mobile Navigation */}
       <nav className="md:hidden sticky top-0 z-50">
         <div
-          className="bar bg-[#081318]/70
+          className="bar navbar-transparent
         flex items-center justify-between px-5 py-8 h-14"
         >
           <div className="nav-logo">
@@ -119,7 +119,7 @@ const NavBar = () => {
           </div>
         </div>
         <div
-          className={`bg-[#081318]/50 absolute top-14 left-0 z-40 h-fit w-full
+          className={`navbar-transparent absolute top-14 left-0 z-40 h-fit w-full
              transition duration-300 ease-in-out py-10
         flex flex-col items-center gap-4 transform ${
           isMenuOpen
@@ -162,7 +162,7 @@ const NavBar = () => {
           </div>
         </div>
       </nav>
-    </div>
+    </>
   );
 };
 
