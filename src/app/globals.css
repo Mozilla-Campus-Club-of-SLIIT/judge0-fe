@@ -11,14 +11,14 @@
   --foreground: #171717;
 
   /* Colors*/
-  --primary: #40fd51;
+  --primary: #1ee449;
   --light-green: #7ab181;
   --dark-green: #02730c;
   --darkest-green: #070916;
   --dark-gray: #151722;
 
   /* Gradients */
-  --linear-gradient: linear-gradient(11deg, #40fd51, #000000);
+  --linear-gradient: linear-gradient(11deg, #1ee449, #000000);
   --gradient-stop-1: #1ee449;
   --gradient-stop-2: #000000;
 }
@@ -62,7 +62,7 @@ body {
   }
 
   .question-card-description {
-    @apply text-gray-300 text-xl line-clamp-5 mt-4 font-semibold;
+    @apply text-gray-300 text-xl line-clamp-5 mt-4;
   }
 
   /* Global background layout */

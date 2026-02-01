@@ -93,7 +93,7 @@ export default function BackgroundLayout({
   // random tetris block
   const tetrisBlocks = useMemo<TetrisBlock[]>(() => {
     const blocks: TetrisBlock[] = [];
-    const numBlocks = 8; // Reduced number of tetris blocks
+    const numBlocks = 4; // Reduced number of tetris blocks
 
     // Helper function to check if new block is too close to existing blocks
     const isTooCloseToOtherBlocks = (
@@ -140,7 +140,7 @@ export default function BackgroundLayout({
   // random white boxes
   const whiteBoxes = useMemo<WhiteBox[]>(() => {
     const boxes: WhiteBox[] = [];
-    const numBoxes = 10;
+    const numBoxes = 5;
     const boxSize = 3;
 
     const isTooCloseToTetris = (top: number, left: number): boolean => {
@@ -184,7 +184,7 @@ export default function BackgroundLayout({
           left,
           width: boxSize,
           height: boxSize,
-          opacity: 0.6,
+          opacity: 0.2,
         });
       }
 
