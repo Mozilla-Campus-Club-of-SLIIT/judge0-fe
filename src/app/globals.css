@@ -71,7 +71,26 @@ body {
   }
 
   .page-background-gradient {
-    @apply absolute inset-0 bg-gradient-to-t from-[#0d3a20]/40 via-[#070916]/80 to-[#070916] pointer-events-none;
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 120%;
+    height: 65%;
+
+    pointer-events: none;
+    z-index: 1;
+
+    background: radial-gradient(
+      ellipse 60% 40% at 50% 100%,
+      rgba(30, 228, 73, 0.55) 0%,
+      rgba(30, 228, 73, 0.3) 30%,
+      rgba(30, 228, 73, 0.12) 55%,
+      transparent 75%
+    );
+
+    filter: blur(70px);
   }
 
   /* tetris block */
