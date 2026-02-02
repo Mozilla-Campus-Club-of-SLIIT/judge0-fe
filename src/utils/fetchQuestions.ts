@@ -1,5 +1,7 @@
+const baseUrl = process.env.NEXT_PUBLIC_JUDGE0_API_BASE_URL;
+
 export async function fetchQuestionsPreview() {
-  const res = await fetch('/question.json');
+  const res = await fetch(`${baseUrl}/api/challenge/get`);
   if (!res.ok) {
     throw new Error('Failed to fetch questions preview');
   }
@@ -7,7 +9,7 @@ export async function fetchQuestionsPreview() {
 }
 
 export async function fetchQuestion(id: string) {
-  const res = await fetch(`/api/questions/${id}`);
+  const res = await fetch(`${baseUrl}/api/questions/${id}`);
   if (!res.ok) {
     throw new Error('Failed to fetch question');
   }
