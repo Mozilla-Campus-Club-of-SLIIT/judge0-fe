@@ -14,9 +14,9 @@ export default function QuestionPreviewCardContainer() {
     const loadQuestions = async () => {
       try {
         const data = await fetchQuestionsPreview();
-        console.log(data);
-
-        setQuestions(data.data);
+        if (data && data.challenges) {
+          setQuestions(data.challenges);
+        }
       } catch (error) {
         console.error(error);
       }
