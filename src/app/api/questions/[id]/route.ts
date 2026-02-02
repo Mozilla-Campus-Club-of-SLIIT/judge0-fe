@@ -8,7 +8,7 @@ export async function GET(
   const { id } = params;
 
   try {
-    const res = await fetch(`${baseUrl}/api/questions/${id}`);
+    const res = await fetch(`${baseUrl}/questions/${id}`);
     const data = await res.json();
     return NextResponse.json(data);
   } catch (error) {

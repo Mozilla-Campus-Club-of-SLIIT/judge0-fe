@@ -4,7 +4,7 @@ export async function GET() {
   const baseUrl = process.env.JUDGE0_API_BASE_URL;
 
   try {
-    const res = await fetch(`${baseUrl}/api/challenge/get`);
+    const res = await fetch(`${baseUrl}/challenge/get`);
     const data = await res.json();
     return NextResponse.json(data);
   } catch (error) {
