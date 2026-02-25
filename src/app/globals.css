@@ -1,12 +1,6 @@
 @import 'tailwindcss';
 
 :root {
-  /* Fonts */
-  --segoe-stack:
-    'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji';
-
-  /* Background color */
   --background: #ffffff;
   --foreground: #171717;
 
@@ -15,15 +9,10 @@
 }
 
 @theme inline {
-  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-
-  /*Fonts*/
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-segoe: var(--segoe-stack);
 }
 
 @media (prefers-color-scheme: dark) {
