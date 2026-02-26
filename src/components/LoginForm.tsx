@@ -50,52 +50,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen w-full flex justify-center items-center bg-[#070916] relative overflow-hidden font-['Segoe_UI',_sans-serif]">
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0d3a20]/40 via-[#070916]/80 to-[#070916] pointer-events-none"></div>
-
-      <div className="absolute top-[8%] left-[32%] opacity-30">
-        <div className="flex flex-col gap-0.5">
-          <div className="flex gap-0.5">
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-          </div>
-          <div className="flex gap-0.5 ml-3">
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-          </div>
-        </div>
-      </div>
-
-      <div className="absolute top-[10%] right-[8%] opacity-30">
-        <div className="flex flex-col gap-0.5">
-          <div className="flex gap-0.5">
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-          </div>
-        </div>
-      </div>
-
-      <div className="absolute bottom-[12%] right-[15%] opacity-30">
-        <div className="flex flex-col gap-0.5">
-          <div className="flex gap-0.5">
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-          </div>
-          <div className="flex gap-0.5">
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-            <div className="w-3 h-3 bg-[#40FD51]"></div>
-          </div>
-        </div>
-      </div>
-
-      <div className="absolute left-[8%] top-[55%]">
-        <div className="flex gap-0.5">
-          <div className="w-3 h-3 bg-[#40FD51]"></div>
-          <div className="w-3 h-3 bg-[#40FD51]"></div>
-          <div className="w-3 h-3 bg-[#40FD51]"></div>
-          <div className="w-3 h-3 bg-[#40FD51]"></div>
-        </div>
-      </div>
-
+    <div className="min-h-screen w-full flex justify-center items-center relative overflow-hidden font-['Segoe_UI',_sans-serif]">
       {/* login card */}
       <div className="relative w-full max-w-[380px] bg-[#151722]/80 backdrop-blur-xl px-8 py-10 rounded-[20px] border border-[#02730C]/30 shadow-2xl flex flex-col items-center z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-[#0d3a20]/70 via-[#0a1f18]/50 to-[#0a1520]/30 pointer-events-none"></div>
