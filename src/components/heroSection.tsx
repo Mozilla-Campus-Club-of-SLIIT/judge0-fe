@@ -1,3 +1,4 @@
+import Image from 'next/image';
 //Hero Section
 
 export default function heroSection() {
@@ -27,7 +28,11 @@ export default function heroSection() {
         
 */}
 
-      <img src="/assets/logo.svg" className="w-137.5 h-92.5 relative "></img>
+      <Image
+        src="/assets/logo.svg"
+        className="w-137.5 h-92.5 relative "
+        alt="logo"
+      />
 
       {/*
       The description is inside the div tag the styles are applied to the div tag
