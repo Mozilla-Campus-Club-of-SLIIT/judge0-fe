@@ -70,7 +70,7 @@ export default function BackgroundLayout() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const newBlocks = Array.from({ length: 6 }).map((_, i) => ({
+    const newBlocks = Array.from({ length: 4 }).map((_, i) => ({
       id: i,
       top: `${Math.random() * 85 + 5}%`,
       left: `${Math.random() * 85 + 5}%`,
@@ -79,7 +79,7 @@ export default function BackgroundLayout() {
       elementIndex: Math.floor(Math.random() * SHAPES.length),
     }));
 
-    const newDots = Array.from({ length: 25 }).map((_, i) => ({
+    const newDots = Array.from({ length: 15 }).map((_, i) => ({
       id: i,
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
@@ -101,7 +101,7 @@ export default function BackgroundLayout() {
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden bg-[var(--darkest-green,#070916)]">
       {/* Top Green Glow */}
-      <div className="absolute -top-[100px] left-1/2 -translate-x-1/2 w-[50vw] max-w-[600px] h-[200px] bg-[var(--primary)] opacity-[0.07] blur-[75px] rounded-[100%] pointer-events-none"></div>
+      <div className="absolute -top-[100px] left-1/2 -translate-x-1/2 w-[35vw] max-w-[400px] h-[150px] bg-[var(--primary)] opacity-[0.06] blur-[60px] rounded-[100%] pointer-events-none"></div>
 
       {/* White dots */}
       {dots.map((dot) => (
