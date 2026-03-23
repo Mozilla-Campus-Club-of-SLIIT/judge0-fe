@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function LoginForm() {
   return (
     <div className="w-full max-w-[420px] mx-auto px-4">
@@ -55,12 +57,12 @@ export default function LoginForm() {
                 />
               </fieldset>
               <div className="mt-1 text-right">
-                <a
+                <Link
                   href="#"
                   className="text-[8px] text-primary/80 hover:text-primary underline transition"
                 >
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -76,12 +78,12 @@ export default function LoginForm() {
           {/* Signup Link */}
           <p className="mt-4 text-center text-sm text-gray-100">
             Don&apos;t have an account ?{' '}
-            <a
+            <Link
               href="#"
               className="text-primary underline transition hover:text-primary/80"
             >
               Signup
-            </a>
+            </Link>
           </p>
         </div>
       </div>
