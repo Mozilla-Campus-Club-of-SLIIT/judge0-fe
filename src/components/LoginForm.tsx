@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function LoginForm() {
@@ -10,7 +11,7 @@ export default function LoginForm() {
         {/* Card */}
         <div className="rounded-[35px] bg-gradient-to-b from-[#060906] to-[#0d2a12] px-8 py-16 backdrop-blur-md sm:px-10 sm:py-18">
           <div className="flex flex-col items-center justify-center mb-4">
-            <img
+            <Image
               src="/main_logo.webp"
               alt="CodeLynx"
               width={130}
