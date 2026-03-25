@@ -4,7 +4,7 @@ import { NAV_LINKS } from '@/lib/navbar';
 
 export default function Navbar() {
   return (
-    <nav className="relative z-10 flex items-center justify-between px-8 py-9 bg-transparent">
+    <nav className="relative z-10 flex items-center justify-between px-8 py-4 pb-1 bg-transparent">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
@@ -22,7 +22,7 @@ export default function Navbar() {
           <li key={link.href}>
             <Link
               href={link.href}
-              className="text-lg font-normal text-white/80 transition-colors duration-200 hover:text-[var(--primary)]"
+              className="text-lg font-normal text-white/80 transition-colors duration-200 hover:text-primary"
             >
               {link.label}
             </Link>
@@ -33,7 +33,7 @@ export default function Navbar() {
       {/* Logout Button */}
       <button
         type="button"
-        className="hidden md:inline-flex items-center px-10 py-1.5 text-sm font-semibold tracking-wider text-[var(--primary)] border border-[var(--primary)] cursor-pointer transition-colors duration-200 hover:bg-[var(--primary)] hover:text-black"
+        className="hidden md:inline-flex items-center px-10 py-1.5 text-sm font-semibold tracking-wider text-primary border border-primary cursor-pointer transition-colors duration-200 hover:bg-primary hover:text-black"
       >
         LOGOUT
       </button>
