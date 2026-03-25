@@ -17,7 +17,7 @@ export default function ChallengeCardHolder({
   onStartChallenge,
 }: ChallengeCardHolderProps) {
   return (
-    <div className="flex flex-wrap justify-center gap-6">
+    <div className="grid grid-cols-[repeat(auto-fit,408px)] justify-center gap-6">
       {challenges.map((challenge) => (
         <ChallengeCard
           key={challenge.id}
