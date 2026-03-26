@@ -8,7 +8,7 @@ export default function DSAChallengePage({
   params: { id: string };
 }) {
   return (
-    <div className="relative z-10 flex h-screen flex-col overflow-hidden font-sans text-[#ededed]">
+    <div className="relative z-10 flex h-screen flex-col font-sans text-[#ededed]">
       <Navbar />
 
       <DSAChallengeHolder id={params.id} />
