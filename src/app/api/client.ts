@@ -176,49 +176,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-// For Serverside requests
-
-let refreshPromiseServer: Promise<string> | null = null;
-
-const refreshAccessTokenServer = async (
-  cookieStore: ReadonlyRequestCookies
-): Promise<string> => {
-  if (refreshPromiseServer) return refreshPromiseServer;
-
-  refreshPromiseServer = (async () => {
-    try {
-      const refreshToken = cookieStore.get('refreshToken')?.value;
-      // Create a temporary axios instance to avoid interceptors
-      const tempAxios = axios.create({ baseURL: API_BASE_URL });
-      const response = await tempAxios.post(
-        '/token/refresh',
-        {},
-        {
-          headers: {
-            Cookie: `refreshToken=${refreshToken}`,
-          },
-        }
-      );
-      const newAccessToken = response.data?.data?.token;
-      if (newAccessToken) {
-        cookieStore.set('accessToken', newAccessToken, {
-          secure: true,
-          sameSite: 'strict',
-          maxAge: 60 * 60 * 24,
-          path: '/',
-        });
-      }
-      return newAccessToken;
-    } catch (error) {
-      cookieStore.delete('accessToken');
-      cookieStore.delete('refreshToken');
-      throw error;
-    } finally {
-      refreshPromiseServer = null;
-    }
-  })();
-
-  return refreshPromiseServer;
-};
-
 export default axiosInstance;
