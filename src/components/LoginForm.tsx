@@ -2,8 +2,27 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState, FormEvent } from 'react';
+import { useAuth } from '@/context/AuthProvider';
 
 export default function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { login, loading } = useAuth();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      await login(email, password);
+      // Redirect handled by AuthProvider
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+    }
+  };
+
   return (
     <div className="w-full max-w-105 mx-auto px-4">
       {/* Gradient border wrapper */}
@@ -31,8 +50,15 @@ export default function LoginForm() {
             Sign in to continue
           </p>
 
+          {/* Error Message */}
+          {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/50">
+              <p className="text-sm text-red-400 text-center">{error}</p>
+            </div>
+          )}
+
           {/* Form */}
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Field — fieldset/legend style */}
             <fieldset className="rounded-lg border-2 border-white/50 px-3 pb-3 pt-1 transition-colors focus-within:border-primary/60">
               <legend className="px-1 text-[8px] font-medium text-primary/70">
@@ -40,8 +66,12 @@ export default function LoginForm() {
               </legend>
               <input
                 id="login-email"
-                type="text"
-                className="w-full bg-transparent text-sm text-white outline-none placeholder-gray-500 mt-0.5"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={loading}
+                className="w-full bg-transparent text-sm text-white outline-none placeholder-gray-500 mt-0.5 disabled:opacity-50"
               />
             </fieldset>
 
@@ -54,7 +84,11 @@ export default function LoginForm() {
                 <input
                   id="login-password"
                   type="password"
-                  className="w-full bg-transparent text-sm text-white outline-none placeholder-gray-500 mt-0.5"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={loading}
+                  className="w-full bg-transparent text-sm text-white outline-none placeholder-gray-500 mt-0.5 disabled:opacity-50"
                 />
               </fieldset>
               <div className="mt-1 text-right">
@@ -70,9 +104,10 @@ export default function LoginForm() {
             {/* Sign In Button */}
             <button
               type="submit"
-              className="w-full rounded-md bg-white py-1.5 text-lg font-semibold text-black transition hover:bg-gray-200 active:scale-[0.98] cursor-pointer mt-2"
+              disabled={loading}
+              className="w-full rounded-md bg-white py-1.5 text-lg font-semibold text-black transition hover:bg-gray-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mt-2"
             >
-              Sign In
+              {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
