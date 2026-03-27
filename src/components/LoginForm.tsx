@@ -4,12 +4,13 @@ import { FormEvent, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 export default function LoginForm() {
   const router = useRouter();
+  const { loading, setLoading, setToken } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -17,7 +18,7 @@ export default function LoginForm() {
     event.preventDefault();
     setError('');
     setSuccess('');
-    setIsLoading(true);
+    setLoading(true);
 
     try {
       const response = await fetch('/api/auth/login', {
@@ -47,7 +48,7 @@ export default function LoginForm() {
         return;
       }
 
-      localStorage.setItem('accessToken', data.accessToken);
+      setToken(data.accessToken);
       setSuccess('Login successful. Access token saved.');
       setEmail('');
       setPassword('');
@@ -55,7 +56,7 @@ export default function LoginForm() {
     } catch {
       setError('Something went wrong while logging in');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -139,10 +140,10 @@ export default function LoginForm() {
             {/* Sign In Button */}
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={loading}
               className="w-full rounded-md bg-white py-1.5 text-lg font-semibold text-black transition hover:bg-gray-200 active:scale-[0.98] cursor-pointer mt-2 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isLoading ? 'Signing In...' : 'Sign In'}
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
 
