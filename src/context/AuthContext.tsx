@@ -3,6 +3,7 @@
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -26,12 +27,32 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
+let externalSetToken: ((nextToken: string | null) => void) | null = null;
+
+const decodeBase64Url = (value: string) => {
+  const base64 = value.replaceAll('-', '+').replaceAll('_', '/');
+  const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=');
+  return atob(padded);
+};
+
+export const updateAuthTokenFromOutside = (nextToken: string | null) => {
+  if (globalThis.window === undefined) return;
+
+  if (nextToken) {
+    localStorage.setItem('accessToken', nextToken);
+  } else {
+    localStorage.removeItem('accessToken');
+  }
+
+  externalSetToken?.(nextToken);
+};
+
 const decodeJWT = (token: string): UserDetails | null => {
   try {
     const parts = token.split('.');
     if (parts.length !== 3) return null;
 
-    const payload = JSON.parse(atob(parts[1]));
+    const payload = JSON.parse(decodeBase64Url(parts[1]));
 
     return {
       email: payload.email,
@@ -49,39 +70,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [user, setUser] = useState<UserDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('accessToken');
-
-    if (storedToken) {
-      fetch('/api/auth/refresh', {
-        method: 'POST',
-        credentials: 'include',
-      })
-        .then((res) => res.json())
-        .then((data: { accessToken?: string }) => {
-          if (data.accessToken) {
-            localStorage.setItem('accessToken', data.accessToken);
-            setAuthToken(data.accessToken);
-
-            const userDetails = decodeJWT(data.accessToken);
-            if (userDetails) {
-              setUser(userDetails);
-            }
-          }
-        })
-        .catch(() => {
-          console.error('Failed to refresh access token');
-          localStorage.removeItem('accessToken');
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const setToken = (nextToken: string | null) => {
+  const setToken = useCallback((nextToken: string | null) => {
     setAuthToken(nextToken);
 
     if (nextToken) {
@@ -97,11 +86,56 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
 
     localStorage.removeItem('accessToken');
     setUser(null);
-  };
+  }, []);
 
-  const setLoading = (nextLoading: boolean) => {
+  const setLoading = useCallback((nextLoading: boolean) => {
     setIsLoading(nextLoading);
-  };
+  }, []);
+
+  useEffect(() => {
+    externalSetToken = setToken;
+
+    return () => {
+      if (externalSetToken === setToken) {
+        externalSetToken = null;
+      }
+    };
+  }, [setToken]);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('accessToken');
+
+    if (storedToken) {
+      fetch('/api/auth/refresh', {
+        method: 'POST',
+        credentials: 'include',
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            throw new Error('Failed to refresh access token');
+          }
+
+          return res.json() as Promise<{ accessToken?: string }>;
+        })
+        .then((data: { accessToken?: string }) => {
+          if (data.accessToken) {
+            setToken(data.accessToken);
+            return;
+          }
+
+          setToken(null);
+        })
+        .catch(() => {
+          console.error('Failed to refresh access token');
+          setToken(null);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      setIsLoading(false);
+    }
+  }, [setToken]);
 
   const value = useMemo(
     () => ({
@@ -111,7 +145,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
       setToken,
       setLoading,
     }),
-    [authToken, user, isLoading]
+    [authToken, isLoading, setLoading, setToken, user]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
