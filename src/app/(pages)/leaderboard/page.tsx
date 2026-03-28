@@ -4,15 +4,15 @@ import Navbar from '@/components/navbar/Navbar';
 
 export default function Leaderboard() {
   return (
-    <div className="min-h-screen flex flex-col font-mono text-white">
+    <div>
       <Navbar />
 
       <main className="flex-1 flex flex-col items-center mt-12 px-6 relative z-10 w-full mb-20">
-        <h1 className="text-center text-base text-[#40FD51] sm:text-lg mb-10 uppercase">
-          Leaderboard live
+        <h1 className="text-[20px] text-[#40fd51] text-center mb-8">
+          LEADERBOARD LIVE
         </h1>
 
-        <div className="w-[85vw] max-w-[2000px] overflow-x-auto bg-[#0C0E19]/80 border-[#162E19]">
+        <div className="w-[85vw] max-w-[2000px] mt-15 overflow-x-auto bg-[#0C0E19]/80 border-[#162E19]">
           <table className="w-full border-collapse">
             <thead>
               <tr>
