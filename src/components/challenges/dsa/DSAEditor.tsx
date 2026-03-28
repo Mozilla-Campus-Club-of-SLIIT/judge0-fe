@@ -1,12 +1,39 @@
-import React from 'react';
+'use client';
 
-interface DSAEditorProps {
-  code: string;
-  setCode: (code: string) => void;
-  onSubmit: () => void;
-}
+import { basicSetup, EditorView } from 'codemirror';
+import React, { useEffect, useRef } from 'react';
 
-export default function DSAEditor({ code, setCode, onSubmit }: DSAEditorProps) {
+export default function DSAEditor({
+  onEditCode,
+  onTestCode,
+}: Readonly<{
+  onEditCode?: (code: string) => void;
+  onTestCode?: () => void;
+}>) {
+  const editorRef = useRef<HTMLDivElement | null>(null);
+  const viewRef = useRef<EditorView | null>(null);
+
+  useEffect(() => {
+    if (!editorRef.current) return;
+
+    viewRef.current = new EditorView({
+      extensions: [
+        basicSetup,
+        EditorView.updateListener.of((update) => {
+          if (update.docChanged) {
+            onEditCode?.(update.state.sliceDoc());
+          }
+        }),
+      ],
+      parent: editorRef.current,
+    });
+
+    return () => {
+      viewRef.current?.destroy();
+      viewRef.current = null;
+    };
+  }, [onEditCode]);
+
   return (
     <div className="relative mb-6 flex h-full w-full flex-1 flex-col xl:mb-8">
       <div className="flex h-full flex-col border border-[#40FD51]/25 bg-[#0C0E19]/80 transition-all duration-300">
@@ -19,18 +46,19 @@ export default function DSAEditor({ code, setCode, onSubmit }: DSAEditorProps) {
 
         {/* Terminal Content */}
         <div className="relative flex flex-1 flex-col overflow-hidden p-6 pb-20">
-          <textarea
-            className="h-full w-full resize-none bg-transparent font-mono text-[14px] leading-relaxed text-white focus:outline-none"
-            spellCheck={false}
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-          />
+          <div ref={editorRef} className="h-full w-full" />
 
-          {/* Submit Button */}
-          <div className="absolute bottom-6 right-6">
+          {/* Buttons */}
+          <div className="absolute bottom-6 right-6 flex gap-3">
+            <button
+              onClick={onTestCode}
+              type="button"
+              className="cursor-pointer border border-[#40FD51] bg-transparent px-10 py-2.5 text-sm font-semibold tracking-widest text-[#40FD51] transition-all duration-200 hover:border-[#40FD51] hover:bg-[#40FD51]/10 active:scale-[0.98]"
+            >
+              Test
+            </button>
             <button
               type="button"
-              onClick={onSubmit}
               className="cursor-pointer border border-[#40FD51] bg-transparent px-10 py-2.5 text-sm font-semibold tracking-widest text-[#40FD51] transition-all duration-200 hover:border-[#40FD51] hover:bg-[#40FD51]/10 active:scale-[0.98]"
             >
               SUBMIT

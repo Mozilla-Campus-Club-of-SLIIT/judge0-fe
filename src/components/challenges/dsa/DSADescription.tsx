@@ -1,6 +1,12 @@
+import { DSAChallengeType } from '@/types/types';
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import remarkGfm from 'remark-gfm';
 
-export default function DSADescription() {
+export default function DSADescription({
+  dsaChallenge,
+}: Readonly<{ dsaChallenge: DSAChallengeType }>) {
   return (
     <div className="relative flex flex-1 flex-col border border-[#40FD51]/25 bg-[#0C0E19]/80 transition-all duration-300">
       {/* Header */}
@@ -12,15 +18,15 @@ export default function DSADescription() {
 
       {/* Content */}
       <div className="custom-scrollbar flex-1 overflow-y-auto px-6 py-6 pb-12">
-        <p className="whitespace-pre-wrap text-[15px] leading-7 text-[#ededed]/70 xl:text-base">
-          Write a program that reads a line of text and determines how many
-          distinct words appear in it. Words are sequences of letters separated
-          by spaces. Uppercase and lowercase letters are treated as the same.
-          {'\n\n'}
-          Input: A single line of text containing words separated by spaces.
-          {'\n\n'}
-          Output: Print the number of distinct words in the given text.
-        </p>
+        <code>{dsaChallenge.sample_input}</code>
+        <br />
+        <code>{dsaChallenge.sample_output}</code>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeHighlight]}
+        >
+          {dsaChallenge.note}
+        </ReactMarkdown>
       </div>
     </div>
   );
