@@ -34,9 +34,12 @@ const fromBase64Utf8 = (value?: string) => {
 export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [dsaChallenge, setDsaChallenge] = useState<DSAChallengeType | null>(null);
+  const [dsaChallenge, setDsaChallenge] = useState<DSAChallengeType | null>(
+    null
+  );
   const [sourceCode, setSourceCode] = useState<string>('');
-  const [testResult, setTestResult] = useState<DSAChallengeTestResponseType | null>(null);
+  const [testResult, setTestResult] =
+    useState<DSAChallengeTestResponseType | null>(null);
   const [testError, setTestError] = useState<string | null>(null);
   const [testing, setTesting] = useState(false);
 

@@ -13,7 +13,7 @@ export default function ChallengeCard({
   description,
   onStart,
   startDisabled,
-}: ChallengeCardProps) {
+}: Readonly<ChallengeCardProps>) {
   return (
     <div className="group relative flex w-full h-[291px] flex-col justify-between border border-[#40FD51]/15 bg-[#0C0E19]/80 p-7 transition-all duration-300 hover:border-[#40FD51]/30 hover:shadow-[0_0_20px_rgba(64,253,81,0.1)]">
       <div>

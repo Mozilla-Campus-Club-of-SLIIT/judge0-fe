@@ -15,7 +15,7 @@ interface ChallengeCardHolderProps {
 
 export default function ChallengeCardHolder({
   challenges,
-}: ChallengeCardHolderProps) {
+}: Readonly<ChallengeCardHolderProps>) {
   const router = useRouter();
 
   return (
