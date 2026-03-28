@@ -3,7 +3,7 @@ export type DSAChallengeType = {
   description: string;
   id: number;
   marks: number;
-  note: string;
+  note: string | null;
   sample_input: string;
   sample_output: string;
   status: string;
@@ -24,3 +24,28 @@ export type DSAChallengeTestResponseType = {
     description: string;
   };
 };
+
+export interface Challenge {
+  id: number;
+  created_at: string;
+  title: string;
+  description: string;
+  type_id: number;
+  status_id: number;
+  type: string;
+  status: string;
+  marks: number;
+  sample_input?: string;
+  sample_output?: string;
+  note?: string | null;
+}
+
+export interface ChallengesResponse {
+  currentPage: number;
+  totalPages: number;
+  challenges: Challenge[];
+}
+
+export interface ChallengeResponse {
+  challenge: Challenge;
+}
