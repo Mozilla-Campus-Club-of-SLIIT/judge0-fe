@@ -1,54 +1,7 @@
-'use client';
-
 import React from 'react';
-import ChallengeCardHolder, {
-  Challenge,
-} from '@/components/challenges/ChallengeCardHolder';
-
-const DUMMY_CHALLENGES: Challenge[] = [
-  {
-    id: '1',
-    title: 'Count Distinct Words',
-    description:
-      'Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase...',
-  },
-  {
-    id: '2',
-    title: 'Count Distinct Words',
-    description:
-      'Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase...',
-  },
-  {
-    id: '3',
-    title: 'Count Distinct Words',
-    description:
-      'Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase...',
-  },
-  {
-    id: '4',
-    title: 'Count Distinct Words',
-    description:
-      'Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase...',
-  },
-  {
-    id: '5',
-    title: 'Count Distinct Words',
-    description:
-      'Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase...',
-  },
-  {
-    id: '6',
-    title: 'Count Distinct Words',
-    description:
-      'Write a program that reads a line of text and determines how many distinct words appear in it. Words are sequences of letters separated by spaces. Uppercase...',
-  },
-];
+import ChallengesContent from '@/components/challenges/ChallengesContent';
 
 export default function ChallengesPage() {
-  const handleStartChallenge = (id: string) => {
-    console.log(`Starting challenge: ${id}`);
-  };
-
   return (
     <div className="relative z-10 min-h-screen px-4 py-12 sm:px-6 lg:px-16">
       {/* Header area */}
@@ -60,10 +13,7 @@ export default function ChallengesPage() {
 
       {/* Challenge cards grid */}
       <div className="mx-auto max-w-7xl">
-        <ChallengeCardHolder
-          challenges={DUMMY_CHALLENGES}
-          onStartChallenge={handleStartChallenge}
-        />
+        <ChallengesContent />
       </div>
     </div>
   );
