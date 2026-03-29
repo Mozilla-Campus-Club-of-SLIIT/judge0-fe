@@ -26,7 +26,7 @@ export default function heroSection() {
 
       <div>
         <button className="text-[23px] border-2 cursor-pointer relative top-10 text-[#40fd51] pr-20 pl-20">
-          SOON
+          LAUNCHING SOON
         </button>
       </div>
     </div>
