@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function heroSection() {
   return (
-    <div className="flex flex-col items-center justify-center p-6">
+    <div className="flex flex-col items-center justify-center p-6 h-screen">
       <h1 className="text-[20px] text-[#40fd51] pr-10 pl-10 p-0.5 relative ">
         STATUS GREEN. WELCOME PARTICIPANTS.
       </h1>
@@ -26,7 +26,7 @@ export default function heroSection() {
 
       <div>
         <button className="text-[23px] border-2 cursor-pointer relative top-10 text-[#40fd51] pr-20 pl-20">
-          VIEW LEADERBOARD
+          SOON
         </button>
       </div>
     </div>
