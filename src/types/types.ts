@@ -49,3 +49,15 @@ export interface ChallengesResponse {
 export interface ChallengeResponse {
   challenge: Challenge;
 }
+
+export interface LeaderboardUser {
+  user_id: string;
+  name: string;
+  xp: number;
+}
+
+export interface LeaderboardResponse {
+  currentPage: number;
+  totalPages: number;
+  users: LeaderboardUser[];
+}
