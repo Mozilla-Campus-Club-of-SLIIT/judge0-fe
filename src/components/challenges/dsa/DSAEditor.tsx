@@ -6,9 +6,13 @@ import React, { useEffect, useRef } from 'react';
 export default function DSAEditor({
   onEditCode,
   onTestCode,
+  onSubmitCode,
+  isEvaluating,
 }: Readonly<{
   onEditCode?: (code: string) => void;
   onTestCode?: () => void;
+  onSubmitCode?: () => void;
+  isEvaluating?: boolean;
 }>) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -51,6 +55,7 @@ export default function DSAEditor({
           {/* Buttons */}
           <div className="absolute bottom-6 right-6 flex gap-3">
             <button
+              disabled={isEvaluating}
               onClick={onTestCode}
               type="button"
               className="cursor-pointer border border-[#40FD51] bg-transparent px-10 py-2.5 text-sm font-semibold tracking-widest text-[#40FD51] transition-all duration-200 hover:border-[#40FD51] hover:bg-[#40FD51]/10 active:scale-[0.98]"
@@ -58,6 +63,8 @@ export default function DSAEditor({
               Test
             </button>
             <button
+              disabled={isEvaluating}
+              onClick={onSubmitCode}
               type="button"
               className="cursor-pointer border border-[#40FD51] bg-transparent px-10 py-2.5 text-sm font-semibold tracking-widest text-[#40FD51] transition-all duration-200 hover:border-[#40FD51] hover:bg-[#40FD51]/10 active:scale-[0.98]"
             >
