@@ -61,3 +61,15 @@ export interface DSAChallengeSubmissionResponse {
   fail_count: number;
   evaluation_status: number;
 }
+
+export interface LeaderboardUser {
+  user_id: string;
+  name: string;
+  xp: number;
+}
+
+export interface LeaderboardResponse {
+  currentPage: number;
+  totalPages: number;
+  users: LeaderboardUser[];
+}
