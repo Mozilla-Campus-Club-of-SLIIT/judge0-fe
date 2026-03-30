@@ -11,6 +11,7 @@ import {
   DSAChallengeTestResponseType,
   DSAChallengeType,
 } from '@/types/types';
+import { languages } from '@/lib/langauges';
 
 const toBase64Utf8 = (value: string) => {
   const bytes = new TextEncoder().encode(value);
@@ -51,6 +52,7 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
   const [evaluatingSubmission, setEvaluatingSubmission] = useState(false);
   const [submissionResponseBody, setSubmissionResponseBody] =
     useState<DSAChallengeSubmissionResponse | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<number>(71);
 
   const formatRequestError = (error: unknown, fallback: string) => {
     if (axios.isAxiosError(error)) {
@@ -90,7 +92,7 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
 
     const payload = {
       challenge_id: dsaChallenge.id,
-      language_id: 71,
+      language_id: selectedLanguage,
       source_code: toBase64Utf8(sourceCode),
       stdin: toBase64Utf8(dsaChallenge.sample_input || ''),
       expected_output: toBase64Utf8(dsaChallenge.sample_output || ''),
@@ -105,14 +107,14 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
     } finally {
       setTesting(false);
     }
-  }, [dsaChallenge, sourceCode]);
+  }, [dsaChallenge, selectedLanguage, sourceCode]);
 
   const onSubmitCode = useCallback(async () => {
     if (!dsaChallenge) return;
 
     const payload = {
       challenge_id: dsaChallenge.id,
-      language_id: 71,
+      language_id: selectedLanguage,
       source_code: toBase64Utf8(sourceCode),
     };
 
@@ -128,7 +130,7 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
       setEvaluatingSubmission(false);
       setSubmissionError(formatRequestError(error, 'Submit failed'));
     }
-  }, [dsaChallenge, sourceCode]);
+  }, [dsaChallenge, selectedLanguage, sourceCode]);
 
   useEffect(() => {
     getChallenge()
@@ -210,6 +212,23 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
       </div>
 
       <div className="w-full">
+        <select
+          className="bg-white text-black"
+          name="language"
+          id="language"
+          value={selectedLanguage ?? ''}
+          onChange={(e) => setSelectedLanguage(Number(e.target.value))}
+        >
+          {languages.map((lang) => (
+            <option
+              key={lang.id}
+              value={lang.id}
+              defaultValue={selectedLanguage}
+            >
+              {lang.name}
+            </option>
+          ))}
+        </select>
         <DSAEditor
           isEvaluating={evaluatingSubmission}
           onEditCode={onEditCode}
