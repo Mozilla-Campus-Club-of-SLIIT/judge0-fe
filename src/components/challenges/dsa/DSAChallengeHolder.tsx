@@ -6,7 +6,11 @@ import DSAChallenge from './DSAChallenge';
 import DSADescription from './DSADescription';
 import DSAEditor from './DSAEditor';
 import { useCallback, useEffect, useState } from 'react';
-import { DSAChallengeTestResponseType, DSAChallengeType } from '@/types/types';
+import {
+  DSAChallengeSubmissionResponse,
+  DSAChallengeTestResponseType,
+  DSAChallengeType,
+} from '@/types/types';
 
 const toBase64Utf8 = (value: string) => {
   const bytes = new TextEncoder().encode(value);
@@ -41,7 +45,23 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
   const [testResult, setTestResult] =
     useState<DSAChallengeTestResponseType | null>(null);
   const [testError, setTestError] = useState<string | null>(null);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [testing, setTesting] = useState(false);
+  const [submissionID, setSubmissionID] = useState<string | null>(null);
+  const [evaluatingSubmission, setEvaluatingSubmission] = useState(false);
+  const [submissionResponseBody, setSubmissionResponseBody] =
+    useState<DSAChallengeSubmissionResponse | null>(null);
+
+  const formatRequestError = (error: unknown, fallback: string) => {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+      const statusPart = status ? ` (${status})` : '';
+      return `${fallback}${statusPart}: ${message || error.message}`;
+    }
+
+    return `${fallback}: unexpected error`;
+  };
 
   const getChallenge = useCallback(async (): Promise<DSAChallengeType> => {
     setLoading(true);
@@ -81,17 +101,32 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
       setTestResult(res.data);
     } catch (error) {
       setTestResult(null);
-
-      if (axios.isAxiosError(error)) {
-        const status = error.response?.status;
-        const message = error.response?.data?.message;
-        const statusPart = status ? ` (${status})` : '';
-        setTestError(`Test failed${statusPart}: ${message || error.message}`);
-      } else {
-        setTestError('Test failed due to an unexpected error');
-      }
+      setTestError(formatRequestError(error, 'Test failed'));
     } finally {
       setTesting(false);
+    }
+  }, [dsaChallenge, sourceCode]);
+
+  const onSubmitCode = useCallback(async () => {
+    if (!dsaChallenge) return;
+
+    const payload = {
+      challenge_id: dsaChallenge.id,
+      language_id: 71,
+      source_code: toBase64Utf8(sourceCode),
+    };
+
+    try {
+      setSubmissionError(null);
+      setSubmissionResponseBody(null);
+      setEvaluatingSubmission(true);
+
+      const res = await api.post('challenges/submit/dsa', payload);
+      setSubmissionID(res.data.submission_id);
+    } catch (error) {
+      setTestResult(null);
+      setEvaluatingSubmission(false);
+      setSubmissionError(formatRequestError(error, 'Submit failed'));
     }
   }, [dsaChallenge, sourceCode]);
 
@@ -102,6 +137,52 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
         setDsaChallenge(null);
       });
   }, [getChallenge]);
+
+  useEffect(() => {
+    if (!submissionID) return;
+
+    let isCancelled = false;
+    let retryTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const fetchSubmission = async (): Promise<void> => {
+      try {
+        const res = await api.get('challenges/get/dsa/submission', {
+          params: {
+            id: submissionID,
+          },
+        });
+
+        if (isCancelled) return;
+
+        setSubmissionResponseBody(res.data);
+
+        if (res.data?.evaluation_status === 1) {
+          retryTimer = setTimeout(() => {
+            void fetchSubmission();
+          }, 2000);
+          return;
+        }
+
+        setEvaluatingSubmission(false);
+      } catch (error) {
+        if (isCancelled) return;
+
+        setEvaluatingSubmission(false);
+        setSubmissionError(
+          formatRequestError(error, 'Failed to fetch submission')
+        );
+      }
+    };
+
+    void fetchSubmission();
+
+    return () => {
+      isCancelled = true;
+      if (retryTimer) {
+        clearTimeout(retryTimer);
+      }
+    };
+  }, [submissionID]);
 
   if (loading) {
     return (
@@ -129,8 +210,25 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
       </div>
 
       <div className="w-full">
-        <DSAEditor onEditCode={onEditCode} onTestCode={onTestCode} />
+        <DSAEditor
+          isEvaluating={evaluatingSubmission}
+          onEditCode={onEditCode}
+          onTestCode={onTestCode}
+          onSubmitCode={onSubmitCode}
+        />
         <div>
+          <div>
+            {evaluatingSubmission && <div>Evaluating submission...</div>}
+            {submissionError && (
+              <div className="text-red-400">{submissionError}</div>
+            )}
+            {submissionResponseBody?.evaluation_status === 3 && (
+              <div className="text-red-400">Submission Failed</div>
+            )}
+            {submissionResponseBody?.evaluation_status === 2 && (
+              <div className="text-green-400">Submission Passed</div>
+            )}
+          </div>
           <div>
             <h1>OUTPUT</h1>
             {testing && <div>Testing...</div>}

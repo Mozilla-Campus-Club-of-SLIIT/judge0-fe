@@ -49,3 +49,15 @@ export interface ChallengesResponse {
 export interface ChallengeResponse {
   challenge: Challenge;
 }
+
+export interface DSAChallengeSubmissionResponse {
+  id: number;
+  created_at: string;
+  submission_id: string;
+  challenge_id: number;
+  user_id: string;
+  test_count: number;
+  pass_count: number;
+  fail_count: number;
+  evaluation_status: number;
+}
