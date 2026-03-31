@@ -63,9 +63,9 @@ export default function LoginForm() {
   return (
     <div className="w-full max-w-105 mx-auto px-4">
       {/* Gradient border wrapper */}
-      <div className="relative rounded-[36px] bg-linear-to-b from-white/30 to-[#0d2a12] p-px shadow-[0_0_60px_-15px_rgba(64,253,81,0.12)]">
+      <div className="relative rounded-[36px] bg-linear-to-b from-white/30 to-[#002809] p-px shadow-[0_0_60px_-15px_rgba(64,253,81,0.12)]">
         {/* Card */}
-        <div className="rounded-[35px] bg-linear-to-b from-[#060906] to-[#0d2a12] px-8 py-16 backdrop-blur-md sm:px-10 sm:py-18">
+        <div className="rounded-[35px] bg-linear-to-b from-[#060906] to-[#002809] px-8 py-16 backdrop-blur-md sm:px-10 sm:py-18">
           <div className="flex flex-col items-center justify-center mb-4">
             <Image
               src="/assets/logo.svg"
