@@ -68,7 +68,7 @@ export default function LoginForm() {
         <div className="rounded-[35px] bg-linear-to-b from-[#060906] to-[#0d2a12] px-8 py-16 backdrop-blur-md sm:px-10 sm:py-18">
           <div className="flex flex-col items-center justify-center mb-4">
             <Image
-              src="/main_logo.webp"
+              src="/assets/logo.svg"
               alt="CodeLynx"
               width={130}
               height={50}
@@ -78,7 +78,7 @@ export default function LoginForm() {
 
           {/* Heading */}
           <h1
-            className="text-2xl text-[#66ca6e] text-center mb-2"
+            className="text-2xl text-primary text-center mb-2"
             style={{ fontFamily: 'var(--font-poppins)', fontWeight: 500 }}
           >
             Welcome Back!
@@ -91,7 +91,7 @@ export default function LoginForm() {
           <form className="space-y-4" onSubmit={handleLogin}>
             {/* Email Field — fieldset/legend style */}
             <fieldset className="rounded-lg border-2 border-white/50 px-3 pb-3 pt-1 transition-colors focus-within:border-primary/60">
-              <legend className="px-1 text-[8px] font-medium text-primary/70">
+              <legend className="px-1 text-[13px] font-medium text-primary/70">
                 Your Email Address
               </legend>
               <input
@@ -100,14 +100,14 @@ export default function LoginForm() {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 required
-                className="w-full bg-transparent text-sm text-white outline-none placeholder-gray-500 mt-0.5"
+                className="w-full bg-transparent text-base text-white outline-none placeholder-gray-500 mt-0.5"
               />
             </fieldset>
 
             {/* Password Field — fieldset/legend style */}
             <div>
               <fieldset className="rounded-lg border-2 border-white/50 px-3 pb-3 pt-1 transition-colors focus-within:border-primary/60">
-                <legend className="px-1 text-[8px] font-medium text-primary/70">
+                <legend className="px-1 text-[13px] font-medium text-primary/70">
                   Enter Your Password
                 </legend>
                 <input
@@ -116,13 +116,13 @@ export default function LoginForm() {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   required
-                  className="w-full bg-transparent text-sm text-white outline-none placeholder-gray-500 mt-0.5"
+                  className="w-full bg-transparent text-base text-white outline-none placeholder-gray-500 mt-0.5"
                 />
               </fieldset>
               <div className="mt-1 text-right">
                 <Link
                   href="#"
-                  className="text-[8px] text-primary/80 hover:text-primary underline transition"
+                  className="text-[13px] text-primary/80 hover:text-primary underline transition"
                 >
                   Forgot your password?
                 </Link>
@@ -152,7 +152,7 @@ export default function LoginForm() {
             Don&apos;t have an account ?{' '}
             <Link
               href="#"
-              className="text-primary underline transition hover:text-primary/80"
+              className="text-primary underline transition hover:text-primary/80 font-bold"
             >
               Signup
             </Link>
