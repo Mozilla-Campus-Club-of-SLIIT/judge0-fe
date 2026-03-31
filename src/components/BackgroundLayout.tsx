@@ -101,7 +101,7 @@ export default function BackgroundLayout() {
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden bg-[var(--darkest-green,#070916)]">
       {/* Top Green Glow */}
-      <div className="absolute -top-[100px] left-1/2 -translate-x-1/2 w-[35vw] max-w-[400px] h-[150px] bg-[var(--primary)] opacity-[0.06] blur-[60px] rounded-[100%] pointer-events-none"></div>
+      <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[60vw] max-w-[800px] h-[260px] bg-[var(--primary)] opacity-[0.13] blur-[45px] rounded-[100%] pointer-events-none"></div>
 
       {/* White dots */}
       {dots.map((dot) => (
