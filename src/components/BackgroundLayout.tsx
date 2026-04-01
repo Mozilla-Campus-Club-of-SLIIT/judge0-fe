@@ -177,12 +177,12 @@ export default function BackgroundLayout() {
     setBlocks(generatedBlocks);
 
     setDots(
-      Array.from({ length: 25 }).map((_, i) => ({
+      Array.from({ length: 14 }).map((_, i) => ({
         id: i,
         top: `${Math.random() * 100}%`,
         left: `${Math.random() * 100}%`,
-        opacity: Math.random() * 0.4,
-        size: Math.random() * 1.2 + 0.5,
+        opacity: Math.random() * 0.35 + 0.45,
+        size: Math.random() + 1,
       }))
     );
 
