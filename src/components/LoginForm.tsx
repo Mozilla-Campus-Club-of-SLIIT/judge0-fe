@@ -65,7 +65,7 @@ export default function LoginForm() {
       {/* Gradient border wrapper */}
       <div className="relative rounded-[36px] bg-linear-to-b from-white/30 to-[#002809] p-px shadow-[0_0_60px_-15px_rgba(64,253,81,0.12)]">
         {/* Card */}
-        <div className="rounded-[35px] bg-linear-to-b from-[#060906] to-[#002809] px-8 py-16 backdrop-blur-md sm:px-10 sm:py-18">
+        <div className="rounded-[35px] bg-linear-to-b from-[#060906] to-[#002809] px-8 pt-16 pb-10 backdrop-blur-md sm:px-10 sm:pt-18 sm:pb-12">
           <div className="flex flex-col items-center justify-center mb-4">
             <Image
               src="/assets/logo.svg"
@@ -83,7 +83,7 @@ export default function LoginForm() {
           >
             Welcome Back!
           </h1>
-          <p className="text-xs text-gray-400 text-center mb-5">
+          <p className="text-lg text-white text-center mb-5">
             Sign in to continue
           </p>
 
@@ -122,7 +122,7 @@ export default function LoginForm() {
               <div className="mt-1 text-right">
                 <Link
                   href="#"
-                  className="text-[13px] text-primary/80 hover:text-primary underline transition"
+                  className="text-[13px] text-primary hover:text-primary/80 underline transition"
                 >
                   Forgot your password?
                 </Link>
@@ -148,7 +148,7 @@ export default function LoginForm() {
           </form>
 
           {/* Signup Link */}
-          <p className="mt-4 text-center text-sm text-gray-100">
+          <p className="mt-6 text-center text-sm text-gray-100">
             Don&apos;t have an account ?{' '}
             <Link
               href="#"
