@@ -1,9 +1,65 @@
 'use client';
 
+import { FormEvent, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 export default function LoginForm() {
+  const router = useRouter();
+  const { loading, setLoading, setToken } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError('');
+    setSuccess('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = (await response.json()) as {
+        accessToken?: string;
+        message?: string;
+      };
+
+      if (!response.ok) {
+        setError(data.message ?? 'Login failed');
+        return;
+      }
+
+      if (!data.accessToken) {
+        setError('Login succeeded but access token is missing');
+        return;
+      }
+
+      setToken(data.accessToken);
+      setSuccess('Login successful. Access token saved.');
+      setEmail('');
+      setPassword('');
+      router.push('/');
+    } catch {
+      setError('Something went wrong while logging in');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="w-full max-w-105 mx-auto px-4">
       {/* Gradient border wrapper */}
@@ -32,7 +88,7 @@ export default function LoginForm() {
           </p>
 
           {/* Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleLogin}>
             {/* Email Field — fieldset/legend style */}
             <fieldset className="rounded-lg border-2 border-white/50 px-3 pb-3 pt-1 transition-colors focus-within:border-primary/60">
               <legend className="px-1 text-[8px] font-medium text-primary/70">
@@ -40,7 +96,10 @@ export default function LoginForm() {
               </legend>
               <input
                 id="login-email"
-                type="text"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
                 className="w-full bg-transparent text-sm text-white outline-none placeholder-gray-500 mt-0.5"
               />
             </fieldset>
@@ -54,6 +113,9 @@ export default function LoginForm() {
                 <input
                   id="login-password"
                   type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
                   className="w-full bg-transparent text-sm text-white outline-none placeholder-gray-500 mt-0.5"
                 />
               </fieldset>
@@ -67,12 +129,21 @@ export default function LoginForm() {
               </div>
             </div>
 
+            {error ? (
+              <p className="text-center text-xs text-red-400">{error}</p>
+            ) : null}
+
+            {success ? (
+              <p className="text-center text-xs text-green-400">{success}</p>
+            ) : null}
+
             {/* Sign In Button */}
             <button
               type="submit"
-              className="w-full rounded-md bg-white py-1.5 text-lg font-semibold text-black transition hover:bg-gray-200 active:scale-[0.98] cursor-pointer mt-2"
+              disabled={loading}
+              className="w-full rounded-md bg-white py-1.5 text-lg font-semibold text-black transition hover:bg-gray-200 active:scale-[0.98] cursor-pointer mt-2 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Sign In
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
 

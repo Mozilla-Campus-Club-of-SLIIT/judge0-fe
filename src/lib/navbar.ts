@@ -1,11 +1,12 @@
 export interface NavLink {
   label: string;
   href: string;
+  secure: boolean;
 }
 
 export const NAV_LINKS: NavLink[] = [
-  { label: 'Home', href: '/' },
-  { label: 'Challenges', href: '/challenges' },
-  { label: 'Leaderboard', href: '/leaderboard' },
-  { label: 'Profile', href: '/profile' },
+  { label: 'Home', href: '/', secure: false },
+  { label: 'Challenges', href: '/challenges', secure: true },
+  { label: 'Leaderboard', href: '/leaderboard', secure: false },
+  { label: 'Profile', href: '/profile', secure: true },
 ];
