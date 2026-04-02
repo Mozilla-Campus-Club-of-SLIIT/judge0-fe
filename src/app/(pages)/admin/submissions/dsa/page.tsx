@@ -224,7 +224,7 @@ export default function AdminSubmissionsPage() {
                       </td>
                       <td className="px-4 py-3">
                         <Link
-                          href={`/admin/submissions/dsa/${submission.token}`}
+                          href={`/admin/submissions/dsa/${submission.token}?name=${encodeURIComponent(submission.name)}&submissionId=${encodeURIComponent(submission.submission_id)}&token=${encodeURIComponent(submission.token)}`}
                           className="inline-flex items-center rounded-md border border-[#40FD51]/30 bg-[#40FD51]/5 px-2.5 py-1.5 text-xs font-medium text-[#40FD51] transition-all hover:bg-[#40FD51]/15 hover:border-[#40FD51]/60"
                         >
                           View
