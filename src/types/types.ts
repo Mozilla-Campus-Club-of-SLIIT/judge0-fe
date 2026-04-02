@@ -73,3 +73,20 @@ export interface LeaderboardResponse {
   totalPages: number;
   users: LeaderboardUser[];
 }
+
+export interface AdminDSASubmissionResult {
+  id: number;
+  created_at: string;
+  submission_id: string;
+  challenge_id: number;
+  user_id: string;
+  name: string;
+  status: number;
+  token: string;
+}
+
+export interface AdminDSASubmissionResultsResponse {
+  currentPage: number;
+  totalPages: number;
+  submissions: AdminDSASubmissionResult[];
+}
