@@ -36,12 +36,12 @@ export default function ChallengeCard({
     <Card rounded="sm" size="md">
       <CardHeader xp={getXp(marks)} className="ml-2 " />
       <CardContent className="text-white mt-4 flex-1 ">
-        <h1 className="text-xl font-bold line-clamp-2 my-4">{title}</h1>
+        <h1 className="text-xl line-clamp-2 my-4">{title}</h1>
         <p className="line-clamp-4 ">{description}</p>
       </CardContent>
-      <CardFooter>
+      <CardFooter align="center">
         <button
-          className="w-full mx-2 my-3 text-white border border-green-500 p-2 cursor-pointer transition-all hover:bg-green-800/30"
+          className="w-full mx-2 my-3 border text-green-500 border-green-500 p-2 cursor-pointer transition-all hover:bg-green-800/30"
           type="button"
           disabled={startDisabled}
           onClick={onStart}

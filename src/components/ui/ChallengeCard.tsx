@@ -87,7 +87,7 @@ interface CardHeaderProps {
 }
 
 const xpBadgeStyles =
-  'inline-block bg-green-500/10 text-green-600 text-xs px-2 py-1 rounded-full border border-green-500/20';
+  'inline-block bg-green-500/10 text-green-600 text-xs px-2 py-1 '; // add border radius for the xp badge here
 
 export function CardHeader({ children, className, xp }: CardHeaderProps) {
   const { variant, size } = useCardContext();
@@ -108,7 +108,7 @@ export function CardHeader({ children, className, xp }: CardHeaderProps) {
         <div className="flex items-center justify-between gap-4 w-full">
           <p
             className={cn(
-              'py-1 px-6 border border-green-500/30 rounded-full bg-green-500/10 text-green-500 font-bold text-sm',
+              'py-1 px-6 border border-green-500/30 bg-green-500/10 text-green-500 font-bold text-sm', // add border radius for the difficulty pill here
               xpStyles[xpType]
             )}
           >
@@ -167,13 +167,18 @@ export function CardFooter({
 }: CardFooterProps) {
   const { variant } = useCardContext();
 
+  const alignStyles = {
+    left: 'justify-start',
+    center: 'justify-center',
+    right: 'justify-end',
+  };
+
   return (
     <div
       className={cn(
-        'mt-2 pt-3',
+        'mt-2 pt-3 flex',
         variant === 'bordered' ? 'border-t-2 border-blue-100' : '',
-        align === 'center' && 'text-center',
-        align === 'right' && 'text-right',
+        alignStyles[align],
         className
       )}
     >
