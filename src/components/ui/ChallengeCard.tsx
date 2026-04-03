@@ -87,7 +87,7 @@ interface CardHeaderProps {
 }
 
 const xpBadgeStyles =
-  'inline-block bg-green-500/10 text-green-600 text-xs px-2 py-1 '; // add border radius for the xp badge here
+  'inline-block bg-green-500/10 text-green-600 text-xs px-3 py-2'; // add border radius for the xp badge here
 
 export function CardHeader({ children, className, xp }: CardHeaderProps) {
   const { variant, size } = useCardContext();
@@ -108,16 +108,16 @@ export function CardHeader({ children, className, xp }: CardHeaderProps) {
         <div className="flex items-center justify-between gap-4 w-full">
           <p
             className={cn(
-              'py-1 px-6 border border-green-500/30 bg-green-500/10 text-green-500 font-bold text-sm', // add border radius for the difficulty pill here
+              'py-1 px-4  border border-green-500/30 bg-green-500/10 text-green-500 font-bold text-xs', // add border radius for the difficulty pill here
               xpStyles[xpType]
             )}
           >
             {xpType?.toUpperCase()}
           </p>
           <div
-            className={`${xpBadgeStyles} text-md font-bold flex items-center justify-center`}
+            className={`${xpBadgeStyles} text-[16px] font-bold flex items-center justify-center`}
           >
-            <BadgePlus className="inline-block w-3 h-3 mr-1 text-center justify-center align-middle" />
+            <BadgePlus className="inline-block w-5 h-5 mr-2 text-center justify-center align-middle" />
             +{xpValue} XP
           </div>
         </div>

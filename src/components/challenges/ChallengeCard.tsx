@@ -34,10 +34,10 @@ export default function ChallengeCard({
 
   return (
     <Card rounded="sm" size="md">
-      <CardHeader xp={getXp(marks)} className="ml-2 " />
+      <CardHeader xp={getXp(marks)} className="ml-2 mr-2" />
       <CardContent className="text-white mt-4 flex-1 ">
         <h1 className="text-xl line-clamp-2 my-4">{title}</h1>
-        <p className="line-clamp-4 ">{description}</p>
+        <p className="line-clamp-4 text-gray-300">{description}</p>
       </CardContent>
       <CardFooter align="center">
         <button
