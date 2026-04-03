@@ -8,11 +8,13 @@ export default function DSAEditor({
   onTestCode,
   onSubmitCode,
   isEvaluating,
+  languageSelector,
 }: Readonly<{
   onEditCode?: (code: string) => void;
   onTestCode?: () => void;
   onSubmitCode?: () => void;
   isEvaluating?: boolean;
+  languageSelector?: React.ReactNode;
 }>) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -39,21 +41,22 @@ export default function DSAEditor({
   }, [onEditCode]);
 
   return (
-    <div className="relative mb-6 flex h-full w-full flex-1 flex-col xl:mb-8">
-      <div className="flex h-full flex-col border border-[#40FD51]/25 bg-[#0C0E19]/80 transition-all duration-300">
+    <div className="relative flex min-h-0 w-full min-w-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col border border-[#40FD51]/25 bg-[#0C0E19]/80 transition-all duration-300">
         {/* Terminal Header */}
-        <div className="border-b border-[#40FD51]/25 px-6 py-4">
+        <div className="flex items-center justify-between gap-4 border-b border-[#40FD51]/25 px-8 py-3 xl:px-10">
           <span className="text-base font-medium tracking-wide text-white">
             Terminal
           </span>
+          {languageSelector}
         </div>
 
         {/* Terminal Content */}
-        <div className="relative flex flex-1 flex-col overflow-hidden p-6 pb-20">
-          <div ref={editorRef} className="h-full w-full" />
+        <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden px-8 py-6 pb-20 xl:px-10">
+          <div ref={editorRef} className="min-h-48 flex-1" />
 
           {/* Buttons */}
-          <div className="absolute bottom-6 right-6 flex gap-3">
+          <div className="absolute bottom-6 right-8 flex gap-3 xl:right-10">
             <button
               disabled={isEvaluating}
               onClick={onTestCode}

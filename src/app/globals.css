@@ -28,3 +28,26 @@ body {
   color: var(--foreground);
   font-family: var(--segoe-stack);
 }
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #40fd51 #0c0e19;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0c0e19;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #40fd51;
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #35d945;
+}
