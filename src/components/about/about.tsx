@@ -14,7 +14,7 @@ export default function About() {
         />
       </div>
 
-      <div className="relative max-w-5xl w-full">
+      <div className="relative max-w-[1300px] w-full">
         {/* SECTION: What is CodeNight */}
         <div className="mb-16 md:mb-20 relative">
           {/* Title */}
@@ -24,7 +24,7 @@ export default function About() {
 
           {/* Paragraph and Dots */}
           <div className="relative">
-            <p className="text-[#ededed] text-xl md:text-xl lg:text-2xl leading-relaxed text-center md:text-left max-w-none mx-auto md:mx-0">
+            <p className="text-[#ededed] text-xl md:text-2xl lg:text-3xl leading-relaxed text-center md:text-left max-w-none mx-auto md:mx-0">
               Code Night is a continuous technical series designed to create a{' '}
               <br className="hidden lg:block" />
               practical and engaging environment for students. It focuses on
@@ -51,8 +51,8 @@ export default function About() {
           </h2>
 
           {/* Vision Statement Box */}
-          <div className="border border-[#40fd51]/40 bg-[#0C0E19]/80 p-6 md:p-10 text-left rounded-sm max-w-3xl">
-            <p className="text-[#ededed] text-base md:text-lg lg:text-xl leading-relaxed max-w-none mx-auto font-light italic">
+          <div className="border border-[#40fd51]/40 bg-[#0C0E19]/80 p-6 md:p-10 text-center rounded-sm max-w-5xl">
+            <p className="text-[#ededed] text-lg md:text-xl lg:text-2xl leading-relaxed max-w-none mx-auto font-light italic">
               &quot;To create a consistent space where students can learn,{' '}
               <br className="hidden lg:block" />
               apply, and improve their technical skills through practical{' '}
