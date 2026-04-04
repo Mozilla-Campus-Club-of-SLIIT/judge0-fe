@@ -3,22 +3,21 @@ import { Twitter, Github, Linkedin, Instagram } from 'lucide-react';
 
 export default function About() {
   return (
-    <section className="py-12 md:py-20 px-4 md:px-8 bg-transparent flex flex-col items-center overflow-x-hidden">
+    <section className="pb-12 md:pb-20 px-4 md:px-8 bg-transparent flex flex-col items-center overflow-x-hidden pt-0">
       {/* Logo */}
-      <div className="relative w-full max-w-[480px] mb-12 md:mb-16 aspect-[550/370]">
-        <Image
-          src="/assets/logo.svg"
-          fill
-          className="object-contain"
-          alt="logo"
-        />
-      </div>
+      <Image
+        src="/assets/logo.svg"
+        width={550}
+        height={370}
+        className="w-137.5 h-92.5 relative mb-12 md:mb-16"
+        alt="logo"
+      />
 
       <div className="relative max-w-[1300px] w-full">
         {/* SECTION: What is CodeNight */}
-        <div className="mb-16 md:mb-20 relative">
+        <div className="mb-24 md:mb-32 relative">
           {/* Title */}
-          <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-6 md:mb-8 text-left">
+          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight mb-8 md:mb-12 text-left">
             <span className="text-[#40fd51]">/</span> What is CodeNight
           </h2>
 
@@ -35,24 +34,18 @@ export default function About() {
               <br className="hidden lg:block" />
               competition.
             </p>
-
-            {/* Center dots between sections */}
-            <div className="mt-8 flex justify-center gap-1.5">
-              <div className="w-1.5 h-1.5 bg-[#40fd51]" />
-            </div>
           </div>
         </div>
 
         {/* SECTION: Our Vision */}
-        <div className="relative mb-20 md:mb-24">
+        <div className="relative mb-24 md:mb-32">
           {/* Title */}
-          <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-6 md:mb-8 text-left">
+          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight mb-8 md:mb-12 text-left">
             <span className="text-[#40fd51]">/</span> Our Vision
           </h2>
 
-          {/* Vision Statement Box */}
           <div className="border border-[#40fd51]/40 bg-[#0C0E19]/80 p-6 md:p-10 text-center rounded-sm max-w-5xl">
-            <p className="text-[#ededed] text-lg md:text-xl lg:text-2xl leading-relaxed max-w-none mx-auto font-light italic">
+            <p className="text-[#ededed] text-2xl md:text-3xl lg:text-4xl leading-relaxed max-w-none mx-auto font-light italic">
               &quot;To create a consistent space where students can learn,{' '}
               <br className="hidden lg:block" />
               apply, and improve their technical skills through practical{' '}
@@ -63,8 +56,8 @@ export default function About() {
         </div>
 
         {/* SECTION: Event RoadMap */}
-        <div className="text-left px-2">
-          <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-8 md:mb-12 text-left">
+        <div className="text-center px-2">
+          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight mb-8 md:mb-12 text-center">
             <span className="text-[#40fd51]">/</span> Event RoadMap
           </h2>
           <div className="flex justify-center overflow-x-auto scrollbar-hide py-2">
@@ -80,7 +73,7 @@ export default function About() {
 
         {/* SECTION: Social Media Footer */}
         <div className="mt-24 md:mt-32 text-center pb-12 md:pb-20 px-4">
-          <p className="text-white/60 text-base md:text-lg lg:text-xl mb-8 max-w-xs md:max-w-none mx-auto">
+          <p className="text-white/60 text-xl md:text-2xl lg:text-3xl mb-8 max-w-xs md:max-w-none mx-auto">
             Follow us for updates, announcements, and upcoming events.
           </p>
           <div className="flex justify-center gap-6 md:gap-8 flex-wrap">
