@@ -1,8 +1,11 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { NAV_LINKS } from '@/lib/navbar';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Navbar() {
+  const { user } = useAuth();
   return (
     <nav className="relative z-10 flex items-center justify-between px-12 py-6 bg-transparent">
       {/* Logo */}

@@ -1,6 +1,7 @@
 export interface NavLink {
   label: string;
   href: string;
+  secure: boolean;
 }
 
 export const NAV_LINKS: NavLink[] = [
