@@ -7,7 +7,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const baseStyle =
-  'text-[23px] border-2 cursor-pointer relative top-10 text-[#40fd51] pr-20 pl-20 mt-1';
+  'text-[23px] border-2 cursor-pointer relative top-10 text-[#40FD51] pr-20 pl-20 mt-1';
 
 export default function Button({
   children,

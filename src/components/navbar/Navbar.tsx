@@ -11,10 +11,10 @@ export default function Navbar() {
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
-          src="/assets/codelynx_logo.png"
-          alt="CodeLynx Logo"
-          width={140}
-          height={36}
+          src="/assets/logo.svg"
+          alt="Logo"
+          width={120}
+          height={40}
           priority
         />
       </Link>
