@@ -299,6 +299,8 @@ export default function DSAChallengeHolder({ id }: Readonly<{ id: string }>) {
         <div className="flex min-h-0 min-w-0 flex-1 flex-col lg:self-stretch">
           <DSAEditor
             isEvaluating={evaluatingSubmission || testing}
+            testing={testing}
+            evaluatingSubmission={evaluatingSubmission}
             onEditCode={onEditCode}
             onTestCode={onTestCode}
             onSubmitCode={onSubmitCode}
