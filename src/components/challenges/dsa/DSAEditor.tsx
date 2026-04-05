@@ -23,7 +23,7 @@ export default function DSAEditor({
   const editorRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
   const [activeAction, setActiveAction] = useState<'none' | 'test' | 'submit'>(
-    'none'
+    'submit'
   );
 
   useEffect(() => {
