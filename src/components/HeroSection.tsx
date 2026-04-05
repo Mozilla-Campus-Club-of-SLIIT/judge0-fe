@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Button from '@/components/ViewLeaderboardButton/Button';
 
-export default function heroSection() {
+export default function HeroSection() {
   return (
     <div className="flex flex-col items-center justify-center p-6">
       <h1 className="text-[20px] text-[#40fd51] pr-10 pl-10 p-0.5 relative ">
