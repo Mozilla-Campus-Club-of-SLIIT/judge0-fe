@@ -45,7 +45,7 @@ export default function Navbar() {
       ) : (
         <Link
           href="/login"
-          className="hidden md:inline-flex items-center px-10 py-1.5 text-sm font-semibold tracking-wider text-primary border border-primary cursor-pointer transition-colors duration-200 hover:bg-primary hover:text-black"
+          className="hidden md:inline-flex items-center px-10 py-1.5 text-sm font-semibold tracking-wider text-[#40FD51] border border-[#40FD51] cursor-pointer transition-colors duration-200 hover:bg-[#40FD51] hover:text-black"
         >
           LOGIN
         </Link>
