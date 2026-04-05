@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Button from '@/components/ViewLeaderboardButton/Button';
 
 export default function HeroSection() {
   return (
@@ -15,7 +16,7 @@ export default function HeroSection() {
         alt="logo"
       />
 
-      <div className="text-center text-3xl text-[#ededed] ">
+      <div className="text-center text-[18px]">
         <p>The ultimate arena for developers.</p>
 
         <p>
@@ -24,11 +25,7 @@ export default function HeroSection() {
         </p>
       </div>
 
-      <div>
-        <button className="text-[23px] border-2 cursor-pointer relative top-10 text-[#40fd51] pr-20 pl-20">
-          VIEW LEADERBOARD
-        </button>
-      </div>
+      <Button>VIEW LEADERBOARD</Button>
     </div>
   );
 }
