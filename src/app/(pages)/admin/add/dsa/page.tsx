@@ -130,7 +130,7 @@ export default function AdminAddDSAPage() {
     }
   };
 
-  if (haveAccess(['Subcommittee'], userContext?.user?.roles || [])) {
+  if (haveAccess(['Codenight host'], userContext?.user?.roles || [])) {
     return (
       <div className="min-h-screen text-zinc-100">
         <Navbar />
