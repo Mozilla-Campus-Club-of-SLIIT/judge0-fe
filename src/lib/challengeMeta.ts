@@ -17,6 +17,7 @@ export const challengeStatusOptions = [
 ] as const;
 
 export type ChallengeDifficulty = 'EASY' | 'MEDIUM' | 'HARD' | 'EXTREME';
+export type ChallengeDifficultyColor = `#${string}`;
 
 const MARKS_TO_DIFFICULTY: Record<number, ChallengeDifficulty> = {
   5: 'EASY',
@@ -25,15 +26,32 @@ const MARKS_TO_DIFFICULTY: Record<number, ChallengeDifficulty> = {
   25: 'EXTREME',
 };
 
+export const CHALLENGE_DIFFICULTY_COLORS: Record<
+  ChallengeDifficulty,
+  ChallengeDifficultyColor
+> = {
+  EASY: '#40FD51',
+  MEDIUM: '#40FD51',
+  HARD: '#40FD51',
+  EXTREME: '#40FD51',
+};
+
 export function getChallengeDifficultyByMarks(
   marks: number
 ): ChallengeDifficulty {
   const difficulty = MARKS_TO_DIFFICULTY[marks];
   if (!difficulty) {
-    throw new Error(`iinvalid challenge marks val: ${marks}`);
+    throw new Error(`Invalid challenge marks value: ${marks}`);
   }
 
   return difficulty;
+}
+
+export function getChallengeDifficultyColorByMarks(
+  marks: number
+): ChallengeDifficultyColor {
+  const difficulty = getChallengeDifficultyByMarks(marks);
+  return CHALLENGE_DIFFICULTY_COLORS[difficulty];
 }
 
 export function getChallengeXpFromMarks(marks: number): number {
