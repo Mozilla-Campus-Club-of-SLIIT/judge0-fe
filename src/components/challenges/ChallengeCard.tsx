@@ -33,7 +33,7 @@ export default function ChallengeCard({
   };
 
   return (
-    <Card rounded="sm" size="md">
+    <Card rounded="sm" size="md" className="flex flex-col justify-between">
       <CardHeader xp={getXp(marks)} className="ml-2 mr-2" />
       <CardContent className="text-white mt-4 flex-1 ">
         <h1 className="text-xl line-clamp-2 my-4">{title}</h1>
