@@ -51,7 +51,7 @@ export default function Navbar() {
         </Link>
       ) : (
         <div>
-          <Link
+          {/* <Link
             href="/login"
             className="hidden md:inline-flex items-center px-10 py-1.5 text-sm font-semibold tracking-wider text-[#40FD51] border border-[#40FD51] cursor-pointer transition-colors duration-200 hover:bg-[#40FD51] hover:text-black"
           >
@@ -64,7 +64,22 @@ export default function Navbar() {
             }
           >
             Login with SLIIT Mozilla
-          </a>
+          </a> */}
+          <button>
+            <a
+              href={
+                'https://accounts.sliitmozilla.org/api/authorize?redirect=' +
+                encodeURIComponent(origin + '/callback')
+              }
+            >
+              <Image
+                src="/login_logo.svg"
+                alt="SLIIT Mozilla Logo"
+                width={200}
+                height={200}
+              />
+            </a>
+          </button>
         </div>
       )}
     </nav>
