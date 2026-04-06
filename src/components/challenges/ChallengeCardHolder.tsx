@@ -27,6 +27,7 @@ export default function ChallengeCardHolder({
             key={challenge.id}
             title={challenge.title}
             description={challenge.description}
+            marks={challenge.marks}
             startDisabled={!isDsa}
             onStart={
               isDsa
