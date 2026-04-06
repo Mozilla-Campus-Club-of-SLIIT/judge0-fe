@@ -37,7 +37,7 @@ export default function ChallengeCard({
       <div>
         <div className="mb-7 flex items-center justify-between">
           <div
-            className="inline-flex h-6 min-w-[68px] items-center justify-center rounded-full border bg-[#14321f]/50 px-3 text-center text-xs leading-none font-semibold tracking-wide max-[420px]:px-2.5"
+            className="inline-flex h-6 min-w-[68px] items-center justify-center border bg-[#14321f]/50 px-3 text-center text-xs leading-none font-semibold tracking-wide max-[420px]:px-2.5"
             style={{
               borderColor: difficultyColor,
               color: difficultyColor,
@@ -47,26 +47,20 @@ export default function ChallengeCard({
             <span className="relative top-px">{difficulty}</span>
           </div>
 
-          <div
-            className="flex h-7 items-center gap-1.5 rounded-full bg-[#14321f]/80 px-3"
-            style={{
-              color: difficultyColor,
-              backgroundColor: `${difficultyColor}26`,
-            }}
-          >
+          <div className="flex h-7 items-center gap-1.5 bg-[#14321f]/80 px-3 ">
             <Image
               src="/assets/medal.svg"
               alt="Medal icon"
               width={16}
               height={16}
             />
-            <span className="text-sm font-semibold tracking-wide">
+            <span className="text-sm font-semibold tracking-wide text-[#38D949]">
               +{xp} XP
             </span>
           </div>
         </div>
 
-        <h3 className="mb-4 text-xl font-semibold text-[#40FD51]">{title}</h3>
+        <h3 className="mb-4 text-xl font-semibold text-white">{title}</h3>
         <p className="text-base leading-7 text-[#ededed]/70">{truncatedDesc}</p>
       </div>
 
