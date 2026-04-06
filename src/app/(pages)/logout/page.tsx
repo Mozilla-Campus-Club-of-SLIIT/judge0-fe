@@ -20,7 +20,7 @@ export default function LogoutPage() {
       }
 
       setToken(null);
-      router.push('/login');
+      router.push('/');
     };
 
     performLogout();
