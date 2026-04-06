@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Button from '@/components/ViewLeaderboardButton/Button';
+import Link from 'next/link';
 
 export default function HeroSection() {
   return (
@@ -25,7 +25,12 @@ export default function HeroSection() {
         </p>
       </div>
 
-      <Button>VIEW LEADERBOARD</Button>
+      <Link
+        href="/leaderboard"
+        className="text-[23px] border-2 cursor-pointer relative top-10 text-[#40FD51] pr-20 pl-20 mt-1"
+      >
+        VIEW LEADERBOARD
+      </Link>
     </div>
   );
 }
