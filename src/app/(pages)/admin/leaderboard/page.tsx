@@ -3,6 +3,7 @@
 import Navbar from '@/components/navbar/Navbar';
 import { useAuth } from '@/context/AuthContext';
 import api from '@/lib/http';
+import { supabase } from '@/lib/supabase';
 import { LeaderboardResponse, LeaderboardUser } from '@/types/types';
 import { haveAccess } from '@/utils/utils';
 import { useEffect, useMemo, useState } from 'react';
@@ -17,6 +18,28 @@ export default function AdminLeaderboardPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshTick, setRefreshTick] = useState(0);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel('public-events', {
+        config: { private: false },
+      })
+      .on('postgres_changes', { event: '*', schema: 'public' }, (payload) => {
+        console.log('Change received!', payload);
+        setRefreshTick((prev) => prev + 1);
+      })
+      .subscribe((status, err) => {
+        console.log('Realtime status:', status);
+        if (err) {
+          console.error('Realtime subscribe error:', err);
+        }
+      });
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -61,7 +84,7 @@ export default function AdminLeaderboardPage() {
     return () => {
       mounted = false;
     };
-  }, [currentPage]);
+  }, [currentPage, refreshTick]);
 
   const pageNumbers = useMemo(() => {
     const start = Math.max(1, currentPage - 2);
