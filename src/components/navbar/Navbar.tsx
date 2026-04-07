@@ -3,14 +3,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { NAV_LINKS } from '@/lib/navbar';
 import { useAuth } from '@/context/AuthContext';
+import { haveAccess } from '@/utils/utils';
 import { useEffect, useState } from 'react';
 
 export default function Navbar() {
   const { user } = useAuth();
   const [origin, setOrigin] = useState('');
+  const isHost = haveAccess(['Codenight host'], user?.roles || []);
 
   useEffect(() => {
-    setOrigin(window.location.origin);
+    setOrigin(globalThis.location.origin);
   }, []);
 
   return (
@@ -39,6 +41,16 @@ export default function Navbar() {
               </Link>
             </li>
           )
+        )}
+        {isHost && (
+          <li>
+            <Link
+              href="/admin"
+              className="text-lg font-normal text-white/80 transition-colors duration-200 hover:text-primary"
+            >
+              Admin
+            </Link>
+          </li>
         )}
       </ul>
 
