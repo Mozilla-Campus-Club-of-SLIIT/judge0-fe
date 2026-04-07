@@ -29,6 +29,13 @@ const adminSections = [
     href: '/admin/submissions/dsa',
     action: 'View Queue',
   },
+  {
+    title: 'Admin Leaderboard',
+    description:
+      'Inspect the live leaderboard feed used for admin monitoring and checks.',
+    href: '/admin/leaderboard',
+    action: 'Open Leaderboard',
+  },
 ];
 
 export default function AdminHomePage() {
@@ -152,6 +159,12 @@ export default function AdminHomePage() {
                 className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
               >
                 Review DSA Queue
+              </Link>
+              <Link
+                href="/admin/leaderboard"
+                className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
+              >
+                Admin Leaderboard
               </Link>
               <button
                 type="button"
