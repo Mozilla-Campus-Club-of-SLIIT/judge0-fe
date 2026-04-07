@@ -1,10 +1,14 @@
 'use client';
 
-import Navbar from '@/components/navbar/Navbar';
-import { useAuth } from '@/context/AuthContext';
-import api from '@/lib/http';
-import { AdminDSAChallenge, AdminDSAChallengesResponse } from '@/types/types';
-import { haveAccess } from '@/utils/utils';
+import Navbar from '../../../../../components/navbar/Navbar';
+import { useAuth } from '../../../../../context/AuthContext';
+import api from '../../../../../lib/http';
+import {
+  AdminDSAChallenge,
+  AdminDSAChallengeTestCase,
+  AdminDSAChallengesResponse,
+} from '../../../../../types/types';
+import { haveAccess } from '../../../../../utils/utils';
 import { useEffect, useMemo, useState } from 'react';
 
 const PAGE_SIZE = 10;
@@ -36,6 +40,9 @@ export default function AdminDSAChallengesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [bulkUpdatingStatusId, setBulkUpdatingStatusId] = useState<
+    number | null
+  >(null);
   const [togglingChallengeId, setTogglingChallengeId] = useState<number | null>(
     null
   );
@@ -135,8 +142,8 @@ export default function AdminDSAChallengesPage() {
         )
       );
 
-      setSelectedChallenge((prev) => {
-        if (!prev || prev.id !== challenge.id) {
+      setSelectedChallenge((prev: AdminDSAChallenge | null) => {
+        if (prev?.id !== challenge.id) {
           return prev;
         }
 
@@ -150,6 +157,41 @@ export default function AdminDSAChallengesPage() {
       setError('Failed to update challenge activity status.');
     } finally {
       setTogglingChallengeId(null);
+    }
+  };
+
+  const onBulkSetStatus = async (statusId: number) => {
+    setError(null);
+    setBulkUpdatingStatusId(statusId);
+
+    try {
+      await api.patch(`/admin/challenges/dsa/${statusId}`);
+
+      const status = getStatusLabel(statusId);
+
+      setChallenges((prev) =>
+        prev.map((challenge) => ({
+          ...challenge,
+          status_id: statusId,
+          status,
+        }))
+      );
+
+      setSelectedChallenge((prev: AdminDSAChallenge | null) => {
+        if (!prev) {
+          return prev;
+        }
+
+        return {
+          ...prev,
+          status_id: statusId,
+          status,
+        };
+      });
+    } catch {
+      setError('Failed to update all DSA challenge statuses.');
+    } finally {
+      setBulkUpdatingStatusId(null);
     }
   };
 
@@ -177,6 +219,28 @@ export default function AdminDSAChallengesPage() {
             <p className="mt-1 text-sm text-zinc-400">
               Page {currentPage} of {totalPages}
             </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => onBulkSetStatus(2)}
+              disabled={loading || bulkUpdatingStatusId !== null}
+              className="rounded-md border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-300 transition-colors hover:bg-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {bulkUpdatingStatusId === 2 ? 'Activating...' : 'Activate All'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onBulkSetStatus(1)}
+              disabled={loading || bulkUpdatingStatusId !== null}
+              className="rounded-md border border-zinc-600 bg-zinc-800/60 px-3 py-1.5 text-xs font-medium text-zinc-200 transition-colors hover:bg-zinc-700/60 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {bulkUpdatingStatusId === 1
+                ? 'Deactivating...'
+                : 'Deactivate All'}
+            </button>
           </div>
         </div>
 
@@ -425,34 +489,36 @@ export default function AdminDSAChallengesPage() {
 
               {selectedChallenge.test_cases?.length ? (
                 <div className="space-y-3">
-                  {selectedChallenge.test_cases.map((testCase, index) => (
-                    <div
-                      key={testCase.id}
-                      className="rounded-md border border-zinc-800 bg-zinc-900/70 p-3"
-                    >
-                      <p className="mb-2 text-xs font-semibold text-[#40FD51]">
-                        Test Case {index + 1}
-                      </p>
-                      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                        <div>
-                          <p className="mb-1 text-[11px] uppercase tracking-wider text-zinc-400">
-                            Input
-                          </p>
-                          <pre className="whitespace-pre-wrap text-xs text-zinc-200">
-                            {testCase.test_input}
-                          </pre>
-                        </div>
-                        <div>
-                          <p className="mb-1 text-[11px] uppercase tracking-wider text-zinc-400">
-                            Expected Output
-                          </p>
-                          <pre className="whitespace-pre-wrap text-xs text-zinc-200">
-                            {testCase.test_output}
-                          </pre>
+                  {selectedChallenge.test_cases.map(
+                    (testCase: AdminDSAChallengeTestCase, index: number) => (
+                      <div
+                        key={testCase.id}
+                        className="rounded-md border border-zinc-800 bg-zinc-900/70 p-3"
+                      >
+                        <p className="mb-2 text-xs font-semibold text-[#40FD51]">
+                          Test Case {index + 1}
+                        </p>
+                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                          <div>
+                            <p className="mb-1 text-[11px] uppercase tracking-wider text-zinc-400">
+                              Input
+                            </p>
+                            <pre className="whitespace-pre-wrap text-xs text-zinc-200">
+                              {testCase.test_input}
+                            </pre>
+                          </div>
+                          <div>
+                            <p className="mb-1 text-[11px] uppercase tracking-wider text-zinc-400">
+                              Expected Output
+                            </p>
+                            <pre className="whitespace-pre-wrap text-xs text-zinc-200">
+                              {testCase.test_output}
+                            </pre>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               ) : (
                 <p className="text-xs text-zinc-400">
