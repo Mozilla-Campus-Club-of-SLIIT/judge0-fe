@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import Navbar from '@/components/navbar/Navbar';
 import { useAuth } from '@/context/AuthContext';
+import api from '@/lib/http';
 import { haveAccess } from '@/utils/utils';
 
 const adminSections = [
@@ -27,10 +29,37 @@ const adminSections = [
     href: '/admin/submissions/dsa',
     action: 'View Queue',
   },
+  {
+    title: 'Admin Leaderboard',
+    description:
+      'Inspect the live leaderboard feed used for admin monitoring and checks.',
+    href: '/admin/leaderboard',
+    action: 'Open Leaderboard',
+  },
 ];
 
 export default function AdminHomePage() {
   const userContext = useAuth();
+  const [isTogglingLeaderboard, setIsTogglingLeaderboard] = useState(false);
+  const [leaderboardToggleMessage, setLeaderboardToggleMessage] = useState<
+    string | null
+  >(null);
+
+  const onToggleLeaderboard = async () => {
+    setLeaderboardToggleMessage(null);
+    setIsTogglingLeaderboard(true);
+
+    try {
+      const response = await api.patch('/admin/leaderboard/toggle');
+      setLeaderboardToggleMessage(
+        response.data?.message || 'Leaderboard state updated successfully.'
+      );
+    } catch {
+      setLeaderboardToggleMessage('Failed to toggle leaderboard state.');
+    } finally {
+      setIsTogglingLeaderboard(false);
+    }
+  };
 
   if (!haveAccess(['Codenight host'], userContext?.user?.roles || [])) {
     return (
@@ -105,6 +134,11 @@ export default function AdminHomePage() {
               <p className="mt-1 text-sm text-zinc-400">
                 Keep this page open as the starting point for admin work.
               </p>
+              {leaderboardToggleMessage && (
+                <p className="mt-2 text-xs text-zinc-300">
+                  {leaderboardToggleMessage}
+                </p>
+              )}
             </div>
 
             <div className="flex flex-wrap gap-3">
@@ -126,6 +160,22 @@ export default function AdminHomePage() {
               >
                 Review DSA Queue
               </Link>
+              <Link
+                href="/admin/leaderboard"
+                className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
+              >
+                Admin Leaderboard
+              </Link>
+              <button
+                type="button"
+                onClick={() => void onToggleLeaderboard()}
+                disabled={isTogglingLeaderboard}
+                className="rounded-md border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-sm text-amber-300 transition-colors hover:border-amber-400/60 hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isTogglingLeaderboard
+                  ? 'Toggling Leaderboard...'
+                  : 'Toggle Leaderboard'}
+              </button>
             </div>
           </div>
         </div>
