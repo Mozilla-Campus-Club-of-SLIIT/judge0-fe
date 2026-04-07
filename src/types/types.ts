@@ -105,3 +105,33 @@ export interface Judge0SubmissionDetails {
   stderr: string | null;
   status: Judge0SubmissionStatus;
 }
+
+export interface AdminDSAChallengeTestCase {
+  id: number;
+  created_at: string;
+  challenge_id: number;
+  test_input: string;
+  test_output: string;
+}
+
+export interface AdminDSAChallenge {
+  id: number;
+  created_at: string;
+  title: string;
+  description: string;
+  type_id: number;
+  status_id: number;
+  type: string;
+  status: string;
+  sample_input: string;
+  sample_output: string;
+  note: string | null;
+  marks: number;
+  test_cases: AdminDSAChallengeTestCase[];
+}
+
+export interface AdminDSAChallengesResponse {
+  challenges: AdminDSAChallenge[];
+  currentPage: number;
+  totalPages: number;
+}
