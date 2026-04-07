@@ -31,9 +31,9 @@ export const CHALLENGE_DIFFICULTY_COLORS: Record<
   ChallengeDifficultyColor
 > = {
   EASY: '#40FD51',
-  MEDIUM: '#40FD51',
-  HARD: '#40FD51',
-  EXTREME: '#40FD51',
+  MEDIUM: '#FFF94D',
+  HARD: '#FF4D4D',
+  EXTREME: '#8290EB',
 };
 
 export function getChallengeDifficultyByMarks(
