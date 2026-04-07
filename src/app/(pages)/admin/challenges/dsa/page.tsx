@@ -46,6 +46,9 @@ export default function AdminDSAChallengesPage() {
   const [togglingChallengeId, setTogglingChallengeId] = useState<number | null>(
     null
   );
+  const [deletingChallengeId, setDeletingChallengeId] = useState<number | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
 
   const getNextStatusId = (statusId: number) => (statusId === 2 ? 1 : 2);
@@ -192,6 +195,32 @@ export default function AdminDSAChallengesPage() {
       setError('Failed to update all DSA challenge statuses.');
     } finally {
       setBulkUpdatingStatusId(null);
+    }
+  };
+
+  const onDeleteChallenge = async (challenge: AdminDSAChallenge) => {
+    const confirmed = globalThis.confirm(
+      `Delete challenge #${challenge.id} (${challenge.title})? This cannot be undone.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setError(null);
+    setDeletingChallengeId(challenge.id);
+
+    try {
+      await api.delete('/admin/challenges/dsa', {
+        params: { id: challenge.id },
+      });
+
+      setChallenges((prev) => prev.filter((item) => item.id !== challenge.id));
+      setSelectedChallenge((prev) => (prev?.id === challenge.id ? null : prev));
+    } catch {
+      setError('Failed to delete challenge.');
+    } finally {
+      setDeletingChallengeId(null);
     }
   };
 
@@ -357,10 +386,27 @@ export default function AdminDSAChallengesPage() {
                           <button
                             type="button"
                             onClick={() => onToggleChallengeStatus(challenge)}
-                            disabled={togglingChallengeId === challenge.id}
+                            disabled={
+                              togglingChallengeId === challenge.id ||
+                              deletingChallengeId === challenge.id
+                            }
                             className="inline-flex items-center rounded-md border border-zinc-700 bg-zinc-800/60 px-2.5 py-1.5 text-xs font-medium text-zinc-200 transition-all hover:border-zinc-500 disabled:cursor-not-allowed disabled:opacity-50"
                           >
                             {getToggleActionLabel(challenge)}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => void onDeleteChallenge(challenge)}
+                            disabled={
+                              deletingChallengeId === challenge.id ||
+                              togglingChallengeId === challenge.id
+                            }
+                            className="inline-flex items-center rounded-md border border-red-500/40 bg-red-500/10 px-2.5 py-1.5 text-xs font-medium text-red-300 transition-all hover:border-red-400/70 hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            {deletingChallengeId === challenge.id
+                              ? 'Deleting...'
+                              : 'Delete'}
                           </button>
                         </div>
                       </td>
