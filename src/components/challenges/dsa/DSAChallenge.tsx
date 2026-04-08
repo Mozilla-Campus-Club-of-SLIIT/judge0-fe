@@ -1,5 +1,17 @@
 import { DSAChallengeType } from '@/types/types';
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import remarkGfm from 'remark-gfm';
+
+const markdownComponents = {
+  p: ({ children }: Readonly<{ children?: React.ReactNode }>) => (
+    <p className="mt-4 leading-7 first:mt-0">{children}</p>
+  ),
+  ul: ({ children }: Readonly<{ children?: React.ReactNode }>) => (
+    <ul className="ml-6 mt-4 list-disc">{children}</ul>
+  ),
+};
 
 export default function DSAChallenge({
   dsaChallenge,
@@ -13,9 +25,15 @@ export default function DSAChallenge({
       </div>
       {/* Content */}
       <div className="px-8 py-6 xl:px-10">
-        <p className="text-[15px] leading-7 text-[#ededed]/70 xl:text-base">
-          {dsaChallenge?.description}
-        </p>
+        <div className="text-[15px] leading-7 text-[#ededed]/70 xl:text-base">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeHighlight]}
+            components={markdownComponents}
+          >
+            {dsaChallenge?.description}
+          </ReactMarkdown>
+        </div>
       </div>
     </div>
   );
