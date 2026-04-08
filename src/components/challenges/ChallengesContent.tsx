@@ -13,7 +13,7 @@ export default function ChallengesContent() {
   useEffect(() => {
     api
       .get<ChallengesResponse>('/challenges/get', {
-        params: { page: 1, pageSize: 10 },
+        params: { page: 1, pageSize: 15 },
       })
       .then((res) => setChallenges(res.data.challenges))
       .catch(() => setError('Failed to load challenges.'))
