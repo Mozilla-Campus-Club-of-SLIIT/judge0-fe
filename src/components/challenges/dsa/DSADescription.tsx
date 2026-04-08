@@ -8,6 +8,9 @@ const markdownComponents = {
   p: ({ children }: Readonly<{ children?: React.ReactNode }>) => (
     <p className="mt-4 leading-7 first:mt-0">{children}</p>
   ),
+  ul: ({ children }: Readonly<{ children?: React.ReactNode }>) => (
+    <ul className="ml-6 mt-4 list-disc">{children}</ul>
+  ),
 };
 
 export default function DSADescription({
