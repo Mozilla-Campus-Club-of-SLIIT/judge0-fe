@@ -74,7 +74,7 @@ export default function AdminLinuxChallengesPage() {
 
       try {
         const res = await api.get<AdminLinuxChallengesResponse>(
-          'api/admin/challenges/linux',
+          '/admin/challenges/linux',
           {
             params: {
               page: currentPage,
