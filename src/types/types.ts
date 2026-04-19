@@ -135,3 +135,23 @@ export interface AdminDSAChallengesResponse {
   currentPage: number;
   totalPages: number;
 }
+
+export interface AdminLinuxChallenge {
+  id: number;
+  created_at: string;
+  title: string;
+  description: string;
+  type_id: number;
+  status_id: number;
+  type: string;
+  status: string;
+  marks: number;
+  note: string | null;
+  flag: string;
+}
+
+export interface AdminLinuxChallengesResponse {
+  challenges: AdminLinuxChallenge[];
+  currentPage: number;
+  totalPages: number;
+}

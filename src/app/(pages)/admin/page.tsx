@@ -16,6 +16,13 @@ const adminSections = [
     action: 'Add DSA Challenge',
   },
   {
+    title: 'Linux Challenge Manager',
+    description:
+      'Create Linux challenges with title, note, and flag for CTF-style tasks.',
+    href: '/admin/add/linux',
+    action: 'Add Linux Challenge',
+  },
+  {
     title: 'DSA Challenges',
     description:
       'View every DSA challenge with pagination, status, marks, and test case count.',
@@ -35,6 +42,13 @@ const adminSections = [
       'Inspect the live leaderboard feed used for admin monitoring and checks.',
     href: '/admin/leaderboard',
     action: 'Open Leaderboard',
+  },
+  {
+    title: 'Linux Challenges',
+    description:
+      'View and manage all Linux challenges with pagination, status control, and bulk updates.',
+    href: '/admin/challenges/linux',
+    action: 'View Challenges',
   },
 ];
 
@@ -149,6 +163,12 @@ export default function AdminHomePage() {
                 New Challenge
               </Link>
               <Link
+                href="/admin/add/linux"
+                className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
+              >
+                New Linux Challenge
+              </Link>
+              <Link
                 href="/admin/challenges/dsa"
                 className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
               >
@@ -165,6 +185,12 @@ export default function AdminHomePage() {
                 className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
               >
                 Admin Leaderboard
+              </Link>
+              <Link
+                href="/admin/challenges/linux"
+                className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
+              >
+                Linux Challenges
               </Link>
               <button
                 type="button"
