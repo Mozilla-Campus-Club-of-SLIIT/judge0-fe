@@ -18,20 +18,34 @@ export default function ChallengeCardHolder({
 }: Readonly<ChallengeCardHolderProps>) {
   const router = useRouter();
 
+  const getChallengeType = (challenge: Challenge): string => {
+    if (challenge.type) {
+      return challenge.type.trim().toLowerCase();
+    }
+    return 'UNKNOWN';
+  };
+
+  const handleChallengeStart = (challenge: Challenge) => {
+    const type = getChallengeType(challenge);
+    if (type !== 'unknown') {
+      router.push(`/challenges/${type}/${challenge.id}`);
+    }
+  };
+
   return (
     <div className="grid grid-cols-[repeat(auto-fit,408px)] justify-center gap-6">
       {challenges.map((challenge) => {
-        const isDsa = isDSAChallenge(challenge);
+        const challengeType = getChallengeType(challenge);
         return (
           <ChallengeCard
             key={challenge.id}
             title={challenge.title}
             description={challenge.description}
             marks={challenge.marks}
-            startDisabled={!isDsa}
+            startDisabled={challengeType === 'unknown'}
             onStart={
-              isDsa
-                ? () => router.push(`/challenges/dsa/${challenge.id}`)
+              challengeType !== 'unknown'
+                ? () => handleChallengeStart(challenge)
                 : undefined
             }
           />
