@@ -41,6 +41,18 @@ type LinuxChallengeResponse = {
   challenge?: LinuxChallengeData;
 };
 
+type LinuxSubmissionOkResponse = {
+  is_correct: boolean;
+  message: string;
+  marks?: number;
+};
+
+type LinuxSubmissionBadRequest = {
+  is_correct?: false;
+  message?: string;
+  error?: string;
+};
+
 const isLinuxChallenge = (challenge?: LinuxChallengeData) => {
   if (!challenge) return false;
 
@@ -53,6 +65,10 @@ export default function LinuxChallenge({ id }: Readonly<LinuxChallengeProps>) {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [flag, setFlag] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [resultMessage, setResultMessage] = useState<string | null>(null);
+  const [earnedMarks, setEarnedMarks] = useState<number | null>(null);
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -105,10 +121,90 @@ export default function LinuxChallenge({ id }: Readonly<LinuxChallengeProps>) {
     };
   }, [id]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const challengeIdValid = challenge && Number.isFinite(challenge.id);
+  const canSubmit =
+    !loading && !submitting && challengeIdValid && flag.trim().length > 0;
+
+  const handleSubmissionSuccess = (data: LinuxSubmissionOkResponse) => {
+    setResultMessage(data.message);
+    setIsSuccess(data.is_correct);
+    setEarnedMarks(data.is_correct ? (data.marks ?? null) : null);
+  };
+
+  const handleSubmissionError = (error: unknown) => {
+    setIsSuccess(false);
+    setEarnedMarks(null);
+
+    if (!axios.isAxiosError(error)) {
+      setResultMessage('Failed to submit flag. Please try again.');
+      return;
+    }
+
+    const status = error.response?.status;
+    const data = error.response?.data as LinuxSubmissionBadRequest | undefined;
+
+    switch (status) {
+      case 400: {
+        const backendMessage =
+          data?.message ?? data?.error ?? 'Invalid request';
+        setResultMessage(backendMessage);
+        break;
+      }
+      case 401: {
+        setResultMessage(
+          'Authentication required. Please log in and try again.'
+        );
+        break;
+      }
+      case 404: {
+        setResultMessage('Challenge not found.');
+        break;
+      }
+      case 500: {
+        setResultMessage(
+          'Something went wrong while submitting. Please try again.'
+        );
+        break;
+      }
+      default: {
+        const fallbackMessage =
+          data?.message ??
+          data?.error ??
+          'Failed to submit flag. Please try again.';
+        setResultMessage(fallbackMessage);
+        break;
+      }
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submitting flag:', flag);
-    // Logic for submission would go here (e.g., API call)
+
+    if (!challengeIdValid || !flag.trim()) {
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      setResultMessage(null);
+      setEarnedMarks(null);
+
+      const payload = {
+        challenge_id: challenge.id,
+        flag: flag.trim(),
+      };
+
+      const response = await api.post<LinuxSubmissionOkResponse>(
+        'challenges/submit/linux',
+        payload
+      );
+
+      handleSubmissionSuccess(response.data);
+    } catch (error: unknown) {
+      handleSubmissionError(error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (loading) {
@@ -185,15 +281,34 @@ export default function LinuxChallenge({ id }: Readonly<LinuxChallengeProps>) {
               value={flag}
               onChange={(e) => setFlag(e.target.value)}
               placeholder="Enter flag here (e.g. FLAG{...})"
+              required
               className="flex-1 border border-[#40FD51]/30 bg-[#0C0E19] px-4 py-3 text-sm text-[#ededed] placeholder:text-[#ededed]/30 focus:border-[#40FD51]/60 focus:outline-none transition-colors"
             />
             <button
               type="submit"
-              className="cursor-pointer border border-[#40FD51]/40 bg-[#40FD51]/10 px-8 py-3 text-sm font-semibold tracking-widest text-[#40FD51] transition-all hover:border-[#40FD51]/60 hover:bg-[#40FD51]/20 active:scale-[0.98]"
+              disabled={!canSubmit}
+              className="cursor-pointer border border-[#40FD51]/40 bg-[#40FD51]/10 px-8 py-3 text-sm font-semibold tracking-widest text-[#40FD51] transition-all hover:border-[#40FD51]/60 hover:bg-[#40FD51]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              SUBMIT FLAG
+              {submitting ? 'SUBMITTING...' : 'SUBMIT FLAG'}
             </button>
           </form>
+
+          {resultMessage && (
+            <div
+              className={`mt-4 rounded border px-4 py-3 text-sm ${
+                isSuccess
+                  ? 'border-[#40FD51]/40 bg-[#40FD51]/10 text-[#c6ffd1]'
+                  : 'border-red-400/40 bg-red-500/10 text-red-200'
+              }`}
+            >
+              <p>{resultMessage}</p>
+              {isSuccess && earnedMarks !== null && (
+                <p className="mt-1 text-[#40FD51]">
+                  Marks earned: {earnedMarks}
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
