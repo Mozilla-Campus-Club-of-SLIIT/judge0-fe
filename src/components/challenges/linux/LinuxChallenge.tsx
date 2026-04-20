@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState, ReactNode } from 'react';
+import React, { useEffect, useState, ReactNode } from 'react';
+import axios from 'axios';
+import api from '@/lib/http';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
@@ -23,23 +25,107 @@ const markdownComponents = {
 };
 
 interface LinuxChallengeProps {
-  challenge: {
-    title: string;
-    description: string;
-    note?: string | null;
-  };
+  id: string;
 }
 
-export default function LinuxChallenge({
-  challenge,
-}: Readonly<LinuxChallengeProps>) {
+type LinuxChallengeData = {
+  id: number;
+  title: string;
+  description: string;
+  note?: string | null;
+  type?: string;
+  type_id?: number;
+};
+
+type LinuxChallengeResponse = {
+  challenge?: LinuxChallengeData;
+};
+
+const isLinuxChallenge = (challenge?: LinuxChallengeData) => {
+  if (!challenge) return false;
+
+  const challengeType = challenge.type?.trim().toUpperCase();
+  return challengeType === 'LINUX' || challenge.type_id === 3;
+};
+
+export default function LinuxChallenge({ id }: Readonly<LinuxChallengeProps>) {
+  const [challenge, setChallenge] = useState<LinuxChallengeData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [flag, setFlag] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadChallenge = async () => {
+      setLoading(true);
+      setLoadError(null);
+
+      try {
+        const response = await api.get<LinuxChallengeResponse>(
+          `challenges/get/linux/${id}`
+        );
+
+        if (cancelled) return;
+
+        const fetchedChallenge = response.data?.challenge;
+
+        if (!fetchedChallenge || !isLinuxChallenge(fetchedChallenge)) {
+          setChallenge(null);
+          setLoadError('Challenge not found.');
+          return;
+        }
+
+        setChallenge(fetchedChallenge);
+      } catch (error) {
+        if (cancelled) return;
+
+        setChallenge(null);
+
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 404) {
+            setLoadError('Challenge not found.');
+          } else {
+            setLoadError('Failed to load challenge details.');
+          }
+        } else {
+          setLoadError('Failed to load challenge details.');
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    void loadChallenge();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Submitting flag:', flag);
     // Logic for submission would go here (e.g., API call)
   };
+
+  if (loading) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <p className="text-lg text-[#40FD51]">Loading...</p>
+      </div>
+    );
+  }
+
+  if (loadError || !challenge) {
+    return (
+      <div className="border border-red-400/30 bg-red-500/10 px-6 py-5 text-red-200">
+        {loadError || 'Failed to load challenge details.'}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-8">
