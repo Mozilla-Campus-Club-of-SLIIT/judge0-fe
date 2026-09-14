@@ -1,0 +1,44 @@
+const sessions = ['N1 : DSA', 'N2 : Linux', 'N3 : GO', 'N4 : IOT'];
+
+export default function Gallery() {
+  return (
+    <main className="gallery-page px-5 pb-24 text-white sm:px-8">
+      <section className="mx-auto flex w-full max-w-[1048px] flex-col items-center">
+        <p className="mt-[58px] text-center text-[18px] font-normal uppercase text-[#40fd51] sm:mt-[63px] sm:text-[20px]">
+          Session Captured.
+        </p>
+
+        <div
+          aria-label="Session video player"
+          className="mt-[65px] aspect-[4/3] w-full border border-[#124c29] bg-[#090b16] sm:mt-[65px]"
+        />
+      </section>
+
+      <section className="mx-auto mt-[105px] w-full max-w-[994px]">
+        <h1 className="flex items-baseline justify-center gap-2 text-[40px] font-semibold leading-none tracking-[-1.5px] sm:text-[48px]">
+          <span className="font-mono font-bold italic text-[#40fd51]">/</span>
+          <span>Session Albums</span>
+        </h1>
+
+        <div className="mt-[70px] flex flex-col gap-[47px]">
+          {sessions.map((session) => (
+            <article
+              key={session}
+              className="flex min-h-[70px] items-center justify-between border border-[#40fd51] px-10 py-3 sm:px-[41px]"
+            >
+              <h2 className="text-[21px] font-normal tracking-[-0.3px] sm:text-[23px]">
+                {session}
+              </h2>
+              <a
+                href={`#${session.replace(/\s*:\s*/g, '-').toLowerCase()}`}
+                className="inline-flex h-[44px] w-[192px] items-center justify-center border border-[#40fd51] text-[18px] font-semibold uppercase text-[#40fd51] transition-colors hover:bg-[#40fd51] hover:text-[#070916] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#40fd51] sm:w-[192px]"
+              >
+                Click Here
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
