@@ -5,20 +5,64 @@ type Member = {
 };
 
 const coreMembers: Member[] = [
-  { role: 'Lead', name: 'Gayathri Krishnaram' },
-  { role: 'Dev', name: 'Heshan Thenura' },
-  { role: 'Content', name: 'Tharinda Marasinghe' },
-  { role: 'Marketing', name: 'Shazmina Oudeen' },
-  { role: 'Coordinator', name: 'Virul Meemana' },
-  { role: 'Coordinator', name: 'Sahnas Thufail' },
-  { role: 'Coordinator', name: 'Ranindu Wathsal' },
+  {
+    role: 'Lead',
+    name: 'Gayathri Krishnaram',
+    image: '/assets/codenight-team/gayathri.webp',
+  },
+  {
+    role: 'Dev',
+    name: 'Heshan Thenura',
+    image: '/assets/codenight-team/heshan.webp',
+  },
+  {
+    role: 'Content',
+    name: 'Tharinda Marasinghe',
+    image: '/assets/codenight-team/tharinda.webp',
+  },
+  {
+    role: 'Marketing',
+    name: 'Shazmina Oudeen',
+    image: '/assets/codenight-team/shazmina.webp',
+  },
+  {
+    role: 'Coordinator',
+    name: 'Virul Meemana',
+    image: '/assets/codenight-team/virul.webp',
+  },
+  {
+    role: 'Coordinator',
+    name: 'Sahnas Thufail',
+    image: '/assets/codenight-team/sahnas.webp',
+  },
+  {
+    role: 'Coordinator',
+    name: 'Ranindu Wathsal',
+    image: '/assets/codenight-team/ranindu.webp',
+  },
 ];
 
 const speakers: Member[] = [
-  { role: 'N1: DSA', name: 'Seniru Pasan' },
-  { role: 'N2: Linux', name: 'Bhanuka Bandara' },
-  { role: 'N3: GO', name: 'Dasun Wickramasooriya' },
-  { role: 'N4: IOT', name: 'Bishru Muhammadhu' },
+  {
+    role: 'N1: DSA',
+    name: 'Seniru Pasan',
+    image: '/assets/codenight-team/seniru.webp',
+  },
+  {
+    role: 'N2: Linux',
+    name: 'Bhanuka Bandara',
+    image: '/assets/codenight-team/bhanuka.webp',
+  },
+  {
+    role: 'N3: GO',
+    name: 'Dasun Wickramasooriya',
+    image: '/assets/codenight-team/dasun.webp',
+  },
+  {
+    role: 'N4: IOT',
+    name: 'Bishru Muhammadhu',
+    image: '/assets/codenight-team/bishru.webp',
+  },
 ];
 
 function MemberCard({ member }: { member: Member }) {
