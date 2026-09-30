@@ -1,4 +1,16 @@
-const sessions = ['N1 : DSA', 'N2 : Linux', 'N3 : GO', 'N4 : IOT'];
+import Link from 'next/link';
+const sessions = [
+  { name: 'N1 : DSA', url: '#n1-dsa' },
+  {
+    name: 'N2 : Linux',
+    url: 'https://drive.google.com/drive/folders/1CmAGhIeWQoCVdGHY3SH7OHPrBmqJe07T?usp=drive_link',
+  },
+  {
+    name: 'N3 : GO',
+    url: 'https://drive.google.com/drive/folders/1ZRp28fPFtwqhuevInIsHXPs-qhuMn-Kn?usp=drive_link',
+  },
+  { name: 'N4 : IOT', url: '#n4-iot' },
+];
 
 export default function Gallery() {
   return (
@@ -23,18 +35,20 @@ export default function Gallery() {
         <div className="mt-[70px] flex flex-col gap-[47px]">
           {sessions.map((session) => (
             <article
-              key={session}
+              key={session.name}
               className="flex min-h-[70px] items-center justify-between border border-[#40fd51] px-10 py-3 sm:px-[41px]"
             >
               <h2 className="text-[21px] font-normal tracking-[-0.3px] sm:text-[23px]">
-                {session}
+                {session.name}
               </h2>
-              <a
-                href={`#${session.replace(/\s*:\s*/g, '-').toLowerCase()}`}
+              <Link
+                href={session.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-[44px] w-[192px] items-center justify-center border border-[#40fd51] text-[18px] font-semibold uppercase text-[#40fd51] transition-colors hover:bg-[#40fd51] hover:text-[#070916] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#40fd51] sm:w-[192px]"
               >
                 Click Here
-              </a>
+              </Link>
             </article>
           ))}
         </div>
