@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 type Member = {
   role: string;
   name: string;
@@ -51,7 +53,7 @@ const speakers: Member[] = [
   {
     role: 'N2: Linux',
     name: 'Bhanuka Bandara',
-    image: '/assets/codenight-team/bhanuka.webp',
+    image: '/assets/codenight-team/bhanuka-v2.webp',
   },
   {
     role: 'N3: GO',
@@ -79,7 +81,9 @@ function MemberCard({ member }: { member: Member }) {
               alt={member.name}
               width={176}
               height={210}
-              className="h-full w-full object-contain object-bottom"
+              className={`h-full w-full object-contain object-bottom origin-bottom ${
+                member.name === 'Bhanuka Bandara' ? 'scale-[1.12]' : ''
+              }`}
             />
           ) : null}
         </div>
@@ -143,4 +147,3 @@ export default function Team() {
     </main>
   );
 }
-import Image from 'next/image';

@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import GalleryGrid from '@/components/gallery/GalleryGrid';
+
 const sessions = [
   { name: 'N1 : DSA', url: '#n1-dsa' },
   {
@@ -15,16 +17,7 @@ const sessions = [
 export default function Gallery() {
   return (
     <main className="gallery-page px-5 pb-24 text-white sm:px-8">
-      <section className="mx-auto flex w-full max-w-[1048px] flex-col items-center">
-        <p className="mt-[58px] text-center text-[18px] font-normal uppercase text-[#40fd51] sm:mt-[63px] sm:text-[20px]">
-          Session Captured.
-        </p>
-
-        <div
-          aria-label="Session video player"
-          className="mt-[65px] aspect-[4/3] w-full border border-[#124c29] bg-[#090b16] sm:mt-[65px]"
-        />
-      </section>
+      <GalleryGrid />
 
       <section className="mx-auto mt-[105px] w-full max-w-[994px]">
         <h1 className="flex items-baseline justify-center gap-2 text-[40px] font-semibold leading-none tracking-[-1.5px] sm:text-[48px]">
