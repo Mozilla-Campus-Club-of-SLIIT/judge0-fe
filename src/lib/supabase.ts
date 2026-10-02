@@ -10,7 +10,7 @@ if (!supabaseUrl) {
 
 if (!supabasePublishableKey) {
   throw new Error(
-    'Missing NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY environment variable.'
+    'Missing NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY environment variable.'
   );
 }
 
