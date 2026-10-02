@@ -50,6 +50,13 @@ const adminSections = [
     href: '/admin/challenges/linux',
     action: 'View Challenges',
   },
+  {
+    title: 'Manage Marks',
+    description:
+      'Search for a player and add or deduct marks from their total.',
+    href: '/admin/players',
+    action: 'Manage Marks',
+  },
 ];
 
 export default function AdminHomePage() {
@@ -191,6 +198,12 @@ export default function AdminHomePage() {
                 className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
               >
                 Linux Challenges
+              </Link>
+              <Link
+                href="/admin/players"
+                className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-[#40FD51]/50 hover:text-[#40FD51]"
+              >
+                Manage Marks
               </Link>
               <button
                 type="button"

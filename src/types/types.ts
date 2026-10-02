@@ -155,3 +155,21 @@ export interface AdminLinuxChallengesResponse {
   currentPage: number;
   totalPages: number;
 }
+
+export interface AdminPlayer {
+  user_id: string;
+  name: string;
+  email: string;
+  marks: number;
+}
+
+export interface AdminPlayersResponse {
+  players: AdminPlayer[];
+}
+
+export interface AdminPlayerMarksUpdateResponse {
+  message: string;
+  user_id: string;
+  added: number;
+  marks: number;
+}
