@@ -11,7 +11,10 @@ const sessions = [
     name: 'N3 : GO',
     url: 'https://drive.google.com/drive/folders/1ZRp28fPFtwqhuevInIsHXPs-qhuMn-Kn?usp=drive_link',
   },
-  { name: 'N4 : IOT', url: '#n4-iot' },
+  {
+    name: 'N4 : IOT',
+    url: 'https://drive.google.com/drive/folders/13qU97kLlJBNJGbCQ022jQstOQKz5nyX6',
+  },
 ];
 
 export default function Gallery() {
